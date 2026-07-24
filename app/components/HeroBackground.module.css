@@ -1,0 +1,219 @@
+.wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background: transparent;
+}
+
+/* ---------- Base gradient ---------- */
+.base {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+}
+
+/* ---------- Golden radial glows ---------- */
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+.glowTopLeft {
+  width: 55vw;
+  height: 55vw;
+  top: -15vw;
+  left: -12vw;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 90, 0.4) 0%,
+    rgba(245, 194, 66, 0.1) 45%,
+    transparent 70%
+  );
+  filter: blur(90px);
+}
+
+.glowBottomRight {
+  width: 50vw;
+  height: 50vw;
+  bottom: -18vw;
+  right: -10vw;
+  background: radial-gradient(
+    circle,
+    rgba(255, 200, 80, 0.32) 0%,
+    rgba(245, 194, 66, 0.07) 50%,
+    transparent 72%
+  );
+  filter: blur(100px);
+}
+
+.glowCenter {
+  width: 40vw;
+  height: 40vw;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 90, 0.16) 0%,
+    transparent 65%
+  );
+  filter: blur(120px);
+  opacity: 0.8;
+}
+
+/* ---------- Oversized blurred organic blobs ---------- */
+.blob {
+  position: absolute;
+  filter: blur(60px);
+  opacity: 0.4;
+  will-change: transform;
+}
+
+.blobOne {
+  width: 45vw;
+  height: 30vw;
+  top: 10%;
+  right: -8%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 90, 0.22),
+    rgba(245, 194, 66, 0.03)
+  );
+  border-radius: 40% 60% 70% 30% / 50% 40% 60% 50%;
+  filter: blur(70px);
+}
+
+.blobTwo {
+  width: 38vw;
+  height: 38vw;
+  bottom: 5%;
+  left: -10%;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 200, 80, 0.18),
+    rgba(245, 194, 66, 0.02)
+  );
+  border-radius: 60% 40% 30% 70% / 40% 60% 50% 50%;
+  filter: blur(80px);
+}
+
+.blobThree {
+  width: 30vw;
+  height: 22vw;
+  top: 50%;
+  left: 20%;
+  background: linear-gradient(
+    200deg,
+    rgba(245, 194, 66, 0.1),
+    transparent
+  );
+  border-radius: 50% 50% 60% 40% / 60% 30% 70% 40%;
+  filter: blur(90px);
+  opacity: 0.3;
+}
+
+/* ---------- Glass-like light reflections ---------- */
+.reflection {
+  position: absolute;
+  opacity: 0.08;
+  will-change: transform;
+}
+
+.reflectionOne {
+  width: 70vw;
+  height: 1px;
+  top: 35%;
+  left: -10%;
+  transform: rotate(-15deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(245, 194, 66, 0.6),
+    transparent
+  );
+  box-shadow: 0 0 40px 2px rgba(245, 194, 66, 0.15);
+}
+
+.reflectionTwo {
+  width: 50vw;
+  height: 1px;
+  bottom: 25%;
+  right: -5%;
+  transform: rotate(12deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(245, 194, 66, 0.4),
+    transparent
+  );
+  box-shadow: 0 0 30px 1px rgba(245, 194, 66, 0.1);
+}
+
+/* ---------- Ambient golden lighting ---------- */
+.ambient {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 50%,
+    rgba(255, 215, 90, 0.06) 0%,
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+}
+
+/* ---------- Noise / grain texture ---------- */
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
+/* ---------- Vignette for depth & contrast ---------- */
+.vignette {
+  display: none;
+}
+
+/* ---------- Slow ambient drift animations ---------- */
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(3vw, -2vw) scale(1.05); }
+}
+
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-2vw, 2vw) scale(1.08); }
+}
+
+@keyframes drift3 {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.1); }
+}
+
+@keyframes blobFloat1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-2vw, 1vw) rotate(8deg); }
+}
+
+@keyframes blobFloat2 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(2vw, -1vw) rotate(-6deg); }
+}
+
+.glowTopLeft { animation: drift1 18s ease-in-out infinite; }
+.glowBottomRight { animation: drift2 22s ease-in-out infinite; }
+.glowCenter { animation: drift3 16s ease-in-out infinite; }
+.blobOne { animation: blobFloat1 20s ease-in-out infinite; }
+.blobTwo { animation: blobFloat2 24s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .glow, .blob { animation: none; }
+}

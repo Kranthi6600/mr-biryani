@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Royal Chicken Biryani",
+    "vibrant": "#efbf29",
+    "lightVibrant": "#dec887",
+    "darkVibrant": "#72390a",
+    "muted": "#927557",
+    "lightMuted": "#b29674",
+    "darkMuted": "#684b30"
+  },
+  {
+    "name": "Mutton Shahi Biryani",
+    "vibrant": "#dd5c1a",
+    "lightVibrant": "#e6c57f",
+    "darkVibrant": "#77130d",
+    "muted": "#a1894c",
+    "lightMuted": "#b68d89",
+    "darkMuted": "#614e2c"
+  },
+  {
+    "name": "Veg Dum Biryani",
+    "vibrant": "#db1951",
+    "lightVibrant": "#e4c99a",
+    "darkVibrant": "#6b390d",
+    "muted": "#b1906d",
+    "lightMuted": "#cd9e99",
+    "darkMuted": "#614b2e"
+  },
+  {
+    "name": "Fish Special Biryani",
+    "vibrant": "#f0c119",
+    "lightVibrant": "#e8c46c",
+    "darkVibrant": "#7d4d0f",
+    "muted": "#ae9358",
+    "lightMuted": "#cbaa98",
+    "darkMuted": "#6b4c2e"
+  }
+]

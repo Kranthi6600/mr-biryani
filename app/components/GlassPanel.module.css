@@ -1,0 +1,151 @@
+.wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ---------- Floating ambient shadow ---------- */
+.shadow {
+  position: absolute;
+  width: 82vw;
+  height: 72vh;
+  border-radius: 36px;
+  background: rgba(0, 0, 0, 0.6);
+  filter: blur(60px);
+  transform: translateY(3vh);
+  opacity: 0.5;
+}
+
+/* ---------- Main glass panel ---------- */
+.panel {
+  position: relative;
+  width: 88vw;
+  height: 78vh;
+  max-width: 1600px;
+  border-radius: 36px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(20, 20, 20, 0.55) 0%,
+      rgba(13, 13, 13, 0.45) 50%,
+      rgba(20, 18, 12, 0.5) 100%
+    );
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid rgba(245, 194, 66, 0.18);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(245, 194, 66, 0.08);
+  overflow: hidden;
+}
+
+/* ---------- Inner glow along edges ---------- */
+.innerGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: 36px;
+  box-shadow:
+    inset 0 0 30px rgba(245, 194, 66, 0.06),
+    inset 0 0 60px rgba(245, 194, 66, 0.03);
+  pointer-events: none;
+}
+
+/* ---------- Golden rim lighting ---------- */
+.rim {
+  position: absolute;
+  inset: 0;
+  border-radius: 36px;
+  background: linear-gradient(
+    135deg,
+    rgba(245, 194, 66, 0.15) 0%,
+    transparent 25%,
+    transparent 75%,
+    rgba(245, 194, 66, 0.1) 100%
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  padding: 1px;
+  pointer-events: none;
+}
+
+/* ---------- Glass reflections near top corners ---------- */
+.reflection {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.12;
+}
+
+.reflectionLeft {
+  top: 0;
+  left: 0;
+  width: 35%;
+  height: 40%;
+  border-radius: 36px 0 0 0;
+  background: linear-gradient(
+    160deg,
+    rgba(245, 194, 66, 0.25) 0%,
+    transparent 60%
+  );
+  filter: blur(20px);
+}
+
+.reflectionRight {
+  top: 0;
+  right: 0;
+  width: 30%;
+  height: 35%;
+  border-radius: 0 36px 0 0;
+  background: linear-gradient(
+    200deg,
+    rgba(245, 194, 66, 0.18) 0%,
+    transparent 55%
+  );
+  filter: blur(25px);
+}
+
+/* ---------- Fine glass grain ---------- */
+.grain {
+  position: absolute;
+  inset: 0;
+  border-radius: 36px;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ---------- Depth layer (subtle gradient for multi-layer transparency) ---------- */
+.depthLayer {
+  position: absolute;
+  inset: 0;
+  border-radius: 36px;
+  background: radial-gradient(
+    ellipse 70% 50% at 50% 30%,
+    rgba(255, 255, 255, 0.015) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .panel {
+    width: 92vw;
+    height: 72vh;
+    border-radius: 28px;
+  }
+  .shadow {
+    width: 86vw;
+    height: 66vh;
+    border-radius: 28px;
+  }
+}
