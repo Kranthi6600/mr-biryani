@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Cormorant_Garamond } from "next/font/google";
+import { Fraunces, Inter, Cormorant_Garamond, Cinzel_Decorative, Cinzel } from "next/font/google";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -22,6 +22,18 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
+const cinzelDecorative = Cinzel_Decorative({
+  variable: "--font-cinzel-decorative",
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+});
+
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Mr Biryani",
   description: "Royal Kitchen — Signature Biryani Recipes",
@@ -35,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${inter.variable} ${cormorant.variable} ${cinzelDecorative.variable} ${cinzel.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

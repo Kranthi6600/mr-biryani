@@ -12,7 +12,6 @@ export default function Experience() {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const shimmerRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const ornamentRef = useRef<HTMLDivElement>(null);
@@ -65,17 +64,6 @@ export default function Experience() {
           stagger: 0.04,
         }, 0.7)
         .to(buttonRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "back.out(1.4)", duration: 1.2 }, 1.2);
-
-      // Heat shimmer on the title
-      if (shimmerRef.current) {
-        gsap.to(shimmerRef.current, {
-          backgroundPosition: "0 100%, 0 0",
-          duration: 3,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-        });
-      }
 
       // Floating spice particles
       if (particlesRef.current) {
@@ -164,18 +152,18 @@ export default function Experience() {
       className="relative z-20 min-h-screen flex items-center justify-center px-6 py-32 overflow-x-hidden"
       style={{
         background:
-          "radial-gradient(ellipse at 30% 20%, rgba(255, 244, 214, 0.15) 0%, transparent 50%)," +
-          "radial-gradient(ellipse at 70% 80%, rgba(196, 144, 26, 0.2) 0%, transparent 50%)," +
-          "linear-gradient(135deg, #E8AB30 0%, #D4951A 40%, #B88015 100%)",
+          "radial-gradient(ellipse at 30% 20%, rgba(232, 171, 48, 0.12) 0%, transparent 50%)," +
+          "radial-gradient(ellipse at 70% 80%, rgba(196, 144, 26, 0.08) 0%, transparent 50%)," +
+          "linear-gradient(135deg, #0d0703 0%, #1a0f05 40%, #0a0502 100%)",
       }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 15% 25%, rgba(26, 15, 5, 0.05) 0%, transparent 40%)," +
-            "radial-gradient(circle at 85% 75%, rgba(26, 15, 5, 0.04) 0%, transparent 40%)," +
-            "radial-gradient(circle at 50% 50%, rgba(255, 244, 214, 0.08) 0%, transparent 60%)",
+            "radial-gradient(circle at 15% 25%, rgba(232, 171, 48, 0.04) 0%, transparent 40%)," +
+            "radial-gradient(circle at 85% 75%, rgba(232, 171, 48, 0.03) 0%, transparent 40%)," +
+            "radial-gradient(circle at 50% 50%, rgba(245, 194, 66, 0.05) 0%, transparent 60%)",
         }}
       />
 
@@ -190,8 +178,8 @@ export default function Experience() {
               left: `${8 + i * 9}%`,
               bottom: "10%",
               fontSize: `${10 + (i % 3) * 4}px`,
-              color: "rgba(26, 15, 5, 0.25)",
-              textShadow: "0 0 8px rgba(255, 244, 214, 0.3)",
+              color: "rgba(232, 171, 48, 0.25)",
+              textShadow: "0 0 8px rgba(232, 171, 48, 0.2)",
             }}
           >
             {char}
@@ -209,7 +197,7 @@ export default function Experience() {
             width: "320px",
             height: "120px",
             borderRadius: "50%",
-            border: "1px solid rgba(26, 15, 5, 0.2)",
+            border: "1px solid rgba(232, 171, 48, 0.2)",
             opacity: 0.3,
           }}
         />
@@ -229,12 +217,12 @@ export default function Experience() {
                   data-word
                   className="inline-block"
                   style={{
-                    background: "linear-gradient(135deg, #1a0f05 0%, #3a2510 30%, #1a0f05 60%, #2a1a08 100%)",
+                    background: "linear-gradient(135deg, #f5c242 0%, #e8ab30 30%, #f5c242 60%, #d4951a 100%)",
                     WebkitBackgroundClip: "text",
                     backgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     filter:
-                      "drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.35)) drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.22)) drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.35)) drop-shadow(0 2px 4px rgba(255, 244, 214, 0.2))",
+                      "drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.5)) drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.35)) drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.5)) drop-shadow(0 2px 8px rgba(232, 171, 48, 0.3))",
                     transformStyle: "preserve-3d",
                     marginRight: "0.25em",
                   }}
@@ -246,29 +234,13 @@ export default function Experience() {
           </h3>
         </div>
 
-        {/* Heat shimmer overlay */}
-        <div
-          ref={shimmerRef}
-          className="absolute inset-x-0 pointer-events-none"
-          style={{
-            top: "0",
-            height: "120px",
-            background:
-              "linear-gradient(180deg, transparent 0%, rgba(255, 244, 214, 0.06) 40%, transparent 70%), linear-gradient(180deg, transparent 0%, rgba(26, 15, 5, 0.03) 50%, transparent 100%)",
-            backgroundSize: "100% 200%, 100% 100%",
-            backgroundPosition: "0 0, 0 100%",
-            mixBlendMode: "overlay",
-            filter: "blur(8px)",
-          }}
-        />
-
         <p
           ref={subtitleRef}
           className="text-xl sm:text-2xl mb-8"
           style={{
             fontFamily: "var(--font-fraunces), serif",
-            color: "rgba(26, 15, 5, 0.75)",
-            textShadow: "0 1px 2px rgba(255, 244, 214, 0.25), 0 4px 8px rgba(0, 0, 0, 0.1)",
+            color: "rgba(245, 194, 66, 0.75)",
+            textShadow: "0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2)",
             fontStyle: "italic",
             fontWeight: 500,
           }}
@@ -287,7 +259,7 @@ export default function Experience() {
             style={{
               width: "60px",
               height: "1px",
-              background: "linear-gradient(90deg, transparent, rgba(26, 15, 5, 0.35), transparent)",
+              background: "linear-gradient(90deg, transparent, rgba(232, 171, 48, 0.35), transparent)",
               transformOrigin: "center",
             }}
           />
@@ -297,8 +269,8 @@ export default function Experience() {
             style={{
               width: "8px",
               height: "8px",
-              background: "rgba(26, 15, 5, 0.4)",
-              boxShadow: "0 1px 2px rgba(255, 244, 214, 0.2)",
+              background: "rgba(232, 171, 48, 0.4)",
+              boxShadow: "0 1px 2px rgba(232, 171, 48, 0.2)",
             }}
           />
           <span
@@ -307,7 +279,7 @@ export default function Experience() {
             style={{
               width: "60px",
               height: "1px",
-              background: "linear-gradient(90deg, transparent, rgba(26, 15, 5, 0.35), transparent)",
+              background: "linear-gradient(90deg, transparent, rgba(232, 171, 48, 0.35), transparent)",
               transformOrigin: "center",
             }}
           />
@@ -318,10 +290,10 @@ export default function Experience() {
           className="text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-12"
           style={{
             fontFamily: "var(--font-inter), sans-serif",
-            color: "rgba(26, 15, 5, 0.65)",
+            color: "rgba(245, 194, 66, 0.65)",
             letterSpacing: "0.015em",
             lineHeight: 1.9,
-            textShadow: "0 1px 2px rgba(255, 244, 214, 0.2)",
+            textShadow: "0 1px 2px rgba(0, 0, 0, 0.3)",
           }}
         >
           {bodyWords.map((word, i) => (

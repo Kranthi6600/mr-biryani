@@ -1,0 +1,32 @@
+/* ---------- Container ---------- */
+.container {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ---------- Ingredient ---------- */
+.ingredient {
+  position: absolute;
+  opacity: 0.18;
+  will-change: transform;
+  filter: blur(0.5px);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ---------- Hide on touch devices ---------- */
+@media (hover: none) {
+  .container {
+    display: none;
+  }
+}
+
+/* ---------- Reduce on small screens ---------- */
+@media (max-width: 640px) {
+  .ingredient {
+    opacity: 0.1;
+  }
+}

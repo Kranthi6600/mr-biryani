@@ -1,0 +1,596 @@
+/* ---------- Section ---------- */
+.section {
+  position: relative;
+  z-index: 20;
+  height: 500vh;
+  background: linear-gradient(180deg, #0d0703 0%, #1a0f05 40%, #0a0502 70%, #0d0703 100%);
+}
+
+.glowLeft {
+  position: absolute;
+  pointer-events: none;
+  width: 50vw;
+  height: 50vw;
+  top: 10%;
+  left: -15vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 194, 66, 0.06) 0%, transparent 65%);
+  filter: blur(80px);
+}
+
+.glowRight {
+  position: absolute;
+  pointer-events: none;
+  width: 45vw;
+  height: 45vw;
+  bottom: 5%;
+  right: -12vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 101, 26, 0.05) 0%, transparent 65%);
+  filter: blur(90px);
+}
+
+/* ---------- Sticky Container ---------- */
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ---------- Header ---------- */
+.header {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+  width: 100%;
+}
+
+.headerLabel {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(245, 194, 66, 0.5);
+  margin-bottom: 0.5rem;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.headerTitle {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #FFD75A;
+  text-shadow: 0 2px 20px rgba(245, 194, 66, 0.15);
+  font-family: var(--font-cormorant), serif;
+  line-height: 1.2;
+}
+
+/* ---------- Pot Wrapper (left half) ---------- */
+.potWrapper {
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(280px, 40vmin, 400px);
+  height: clamp(240px, 34vmin, 340px);
+  perspective: 800px;
+  z-index: 5;
+}
+
+/* Golden glow behind pot */
+.potGlow {
+  position: absolute;
+  inset: -20%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 90, 0.15) 0%, transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(30px);
+}
+
+/* Fire glow under pot */
+.fireGlow {
+  position: absolute;
+  bottom: -10%;
+  left: 15%;
+  right: 15%;
+  height: 35%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center top,
+    rgba(255, 100, 20, 0.5) 0%,
+    rgba(255, 60, 10, 0.3) 25%,
+    rgba(200, 40, 5, 0.15) 50%,
+    transparent 75%
+  );
+  filter: blur(15px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: opacity, transform;
+  animation: fireFlicker 0.15s ease-in-out infinite alternate;
+}
+
+@keyframes fireFlicker {
+  0% { transform: scaleX(1) scaleY(1); opacity: 1; }
+  50% { transform: scaleX(0.92) scaleY(1.05); opacity: 0.85; }
+  100% { transform: scaleX(1.05) scaleY(0.95); opacity: 0.95; }
+}
+
+/* ---------- Pot Body ---------- */
+.pot {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform: rotateX(8deg);
+  transform-style: preserve-3d;
+}
+
+/* Pot shadow on "table" */
+.potShadow {
+  position: absolute;
+  bottom: -8%;
+  left: 10%;
+  right: 10%;
+  height: 20px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.5) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(8px);
+}
+
+/* Pot exterior — brass handi */
+.potBody {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg,
+      #C8843D 0%,
+      #E0A058 15%,
+      #B87333 40%,
+      #8B5E3C 65%,
+      #6B4226 90%,
+      #4A2E1A 100%
+    );
+  border-radius: 22% 22% 48% 48% / 18% 18% 35% 35%;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    inset -6px -6px 18px rgba(0, 0, 0, 0.3),
+    inset 6px 6px 12px rgba(255, 200, 100, 0.1);
+}
+
+/* Pot rim — the opening */
+.potRim {
+  position: absolute;
+  top: -6px;
+  left: -1%;
+  right: -1%;
+  height: 22px;
+  background: linear-gradient(135deg, #E0A058 0%, #C8843D 40%, #8B5E3C 100%);
+  border-radius: 50%;
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.35),
+    inset 0 2px 4px rgba(255, 200, 100, 0.2),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+/* Pot handles */
+.potHandle {
+  position: absolute;
+  top: 18%;
+  width: 18px;
+  height: 30px;
+  background: linear-gradient(135deg, #B87333, #8B5E3C);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.potHandleLeft {
+  left: -10px;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.potHandleRight {
+  right: -10px;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Pot interior — dark inside */
+.potInterior {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  right: 10px;
+  bottom: 16px;
+  background: #0d0703;
+  border-radius: 20% 20% 46% 46% / 15% 15% 33% 33%;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Food Layers ---------- */
+.layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  will-change: transform, opacity;
+}
+
+/* Layer 1: Marinated meat */
+.layerMeat {
+  bottom: 0;
+  height: 32%;
+  background:
+    radial-gradient(ellipse at 25% 30%, #9B3000 0%, transparent 35%),
+    radial-gradient(ellipse at 65% 50%, #7B2000 0%, transparent 30%),
+    radial-gradient(ellipse at 45% 70%, #6B1A00 0%, transparent 25%),
+    radial-gradient(circle at 80% 25%, #8B2500 0%, transparent 12%),
+    linear-gradient(180deg, #7B2000 0%, #5C1500 60%, #4A1000 100%);
+}
+
+/* Layer 2: Rice */
+.layerRice {
+  bottom: 30%;
+  height: 20%;
+  background:
+    radial-gradient(circle at 15% 25%, rgba(255, 245, 210, 0.5) 0%, transparent 6%),
+    radial-gradient(circle at 35% 50%, rgba(255, 240, 200, 0.4) 0%, transparent 5%),
+    radial-gradient(circle at 55% 30%, rgba(255, 245, 210, 0.45) 0%, transparent 6%),
+    radial-gradient(circle at 75% 55%, rgba(255, 240, 200, 0.35) 0%, transparent 5%),
+    radial-gradient(circle at 85% 25%, rgba(255, 245, 210, 0.4) 0%, transparent 5%),
+    radial-gradient(circle at 25% 70%, rgba(255, 235, 190, 0.3) 0%, transparent 4%),
+    radial-gradient(circle at 65% 75%, rgba(255, 235, 190, 0.3) 0%, transparent 4%),
+    linear-gradient(180deg, #F0E0C0 0%, #E5D5A8 50%, #D8C898 100%);
+}
+
+/* Layer 3: Spices & saffron */
+.layerSpices {
+  bottom: 48%;
+  height: 12%;
+  background:
+    radial-gradient(circle at 20% 40%, #D4651A 0%, transparent 8%),
+    radial-gradient(circle at 50% 60%, #C44510 0%, transparent 6%),
+    radial-gradient(circle at 75% 30%, #E8C547 0%, transparent 5%),
+    radial-gradient(circle at 40% 30%, #8B4513 0%, transparent 4%),
+    radial-gradient(circle at 85% 65%, #D4651A 0%, transparent 5%),
+    linear-gradient(180deg, #C89030 0%, #B88020 60%, #A87010 100%);
+}
+
+/* Layer 4: Top rice (golden, cooked) */
+.layerTopRice {
+  bottom: 58%;
+  height: 22%;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 220, 150, 0.5) 0%, transparent 6%),
+    radial-gradient(circle at 50% 50%, rgba(255, 210, 140, 0.4) 0%, transparent 5%),
+    radial-gradient(circle at 75% 25%, rgba(255, 225, 160, 0.45) 0%, transparent 6%),
+    radial-gradient(circle at 30% 65%, rgba(255, 215, 130, 0.35) 0%, transparent 5%),
+    radial-gradient(circle at 65% 70%, rgba(255, 220, 150, 0.3) 0%, transparent 4%),
+    radial-gradient(circle at 85% 55%, rgba(230, 180, 80, 0.3) 0%, transparent 4%),
+    linear-gradient(180deg, #F5E6C8 0%, #ECD5A8 40%, #E0C898 100%);
+}
+
+/* ---------- Dough Seal ---------- */
+.doughSeal {
+  position: absolute;
+  top: -4px;
+  left: 2%;
+  right: 2%;
+  height: 18px;
+  background:
+    radial-gradient(ellipse at 30% 40%, #E0C8A0 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, #C8B080 0%, transparent 50%),
+    linear-gradient(180deg, #D4B896 0%, #C4A878 50%, #B89868 100%);
+  border-radius: 50%;
+  z-index: 6;
+  opacity: 0;
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 3px rgba(255, 230, 180, 0.2);
+  will-change: transform, opacity;
+}
+
+.doughSealCrack {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  transform: translateY(-50%) scaleX(0);
+}
+
+/* ---------- Steam ---------- */
+.steamContainer {
+  position: absolute;
+  top: -30%;
+  left: 20%;
+  right: 20%;
+  height: 40%;
+  pointer-events: none;
+  z-index: 7;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.steamPuff {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 252, 245, 0.45) 0%,
+    rgba(255, 248, 230, 0.2) 30%,
+    rgba(255, 244, 215, 0.06) 55%,
+    transparent 72%
+  );
+  filter: blur(6px);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: potSteamRise var(--puff-duration, 3s) ease-out var(--puff-delay, 0s) infinite;
+}
+
+@keyframes potSteamRise {
+  0% {
+    transform: translate(-50%, 0) scale(0.1);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.5;
+    transform: translate(-50%, -8%) scale(0.25);
+  }
+  25% {
+    transform: translate(calc(-50% + var(--puff-drift, 0px) * 0.3), -25%) scale(0.6);
+    opacity: 0.38;
+  }
+  50% {
+    transform: translate(calc(-50% + var(--puff-drift, 0px) * 0.55), -50%) scale(1);
+    opacity: 0.22;
+  }
+  75% {
+    transform: translate(calc(-50% + var(--puff-drift, 0px) * 0.8), -75%) scale(1.6);
+    opacity: 0.1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--puff-drift, 0px)), -100%) scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* ---------- Horizontal Track ---------- */
+.track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 500vw;
+  height: 100vh;
+  will-change: transform;
+  z-index: 3;
+}
+
+.panel {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+/* ---------- Step Area (right side) ---------- */
+.stepArea {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding-right: 8%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* ---------- Counter ---------- */
+.counterRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.15em;
+  margin-bottom: 1.5rem;
+}
+
+.counterNum {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 800;
+  font-style: normal;
+  color: #FFD75A;
+  font-family: var(--font-inter), sans-serif;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.counterLabel {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  color: rgba(245, 194, 66, 0.5);
+  font-family: var(--font-inter), sans-serif;
+  margin-right: 0.5em;
+}
+
+/* ---------- Breadcrumb ---------- */
+.breadcrumbClip {
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumbRow {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.crumbItem {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.crumbSep {
+  margin: 0 0.6em;
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: rgba(245, 194, 66, 0.25);
+  font-family: var(--font-cormorant), serif;
+}
+
+.crumbTitle {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 700;
+  font-style: italic;
+  color: #FFD75A;
+  font-family: var(--font-cormorant), serif;
+  text-shadow: 0 2px 12px rgba(245, 194, 66, 0.12);
+}
+
+/* ---------- Description ---------- */
+.descArea {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100px;
+}
+
+.stepDesc {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-inter), sans-serif;
+  max-width: 480px;
+  will-change: opacity, transform;
+}
+
+/* ---------- Step Indicators ---------- */
+.indicators {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  z-index: 10;
+}
+
+.indicatorLine {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: rgba(245, 194, 66, 0.08);
+  transform: translateY(-50%);
+  border-radius: 2px;
+}
+
+.indicatorLineFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(255, 215, 90, 0.6), #FFD75A);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255, 215, 90, 0.3);
+  will-change: width;
+}
+
+.indicator {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(26, 15, 5, 0.9);
+  border: 1px solid rgba(245, 194, 66, 0.12);
+  color: rgba(255, 255, 255, 0.25);
+  z-index: 1;
+  font-family: var(--font-inter), sans-serif;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, background, color, border-color;
+}
+
+.indicatorActive {
+  background: linear-gradient(135deg, #FFD75A, #F5C24A);
+  border-color: rgba(255, 215, 90, 0.5);
+  color: #1a0f05;
+  box-shadow: 0 0 20px rgba(255, 215, 90, 0.25);
+  transform: scale(1.15);
+}
+
+.indicatorDone {
+  border-color: rgba(245, 194, 66, 0.25);
+  color: rgba(245, 194, 66, 0.5);
+}
+
+/* Gap between indicators */
+.indicator + .indicator {
+  margin-left: 28px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .potWrapper {
+    width: 240px;
+    height: 200px;
+  }
+
+  .stepText {
+    margin-top: clamp(160px, 24vh, 260px);
+  }
+
+  .stepDesc {
+    font-size: 0.8rem;
+  }
+
+  .indicator {
+    width: 32px;
+    height: 32px;
+    font-size: 0.65rem;
+  }
+
+  .indicator + .indicator {
+    margin-left: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .steamPuff {
+    animation: none;
+    opacity: 0;
+  }
+}

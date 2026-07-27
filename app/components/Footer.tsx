@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="relative z-20 bg-[#0a0503] px-6 py-16">
+    <footer className="relative z-20 bg-[#0d0703] px-6 py-16">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col items-center gap-8">
           <h3

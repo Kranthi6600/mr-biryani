@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #E8AB30;
+  --background: #0d0703;
   --foreground: #1a1208;
   --gold: #E8AB30;
   --gold-bright: #F5C242;
@@ -21,7 +21,7 @@
 }
 
 body {
-  background: linear-gradient(135deg, #E8AB30 0%, #D4951A 40%, #B88015 100%);
+  background: linear-gradient(135deg, #0d0703 0%, #1a0f05 40%, #0a0502 100%);
   color: var(--foreground);
   font-family: var(--font-inter), sans-serif;
   overflow-x: hidden;
@@ -112,31 +112,40 @@ body {
   50%, 100% { opacity: 0; }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — premium dark */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a0f05;
+  background: rgba(13, 7, 3, 0.4);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #E8AB30 0%, #C4901A 100%);
-  border-radius: 10px;
-  border: 2px solid #1a0f05;
+  background: linear-gradient(180deg, rgba(245, 194, 66, 0.5) 0%, rgba(196, 144, 26, 0.3) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(13, 7, 3, 0.6);
+  background-clip: padding-box;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #F5C242 0%, #E8AB30 100%);
+  background: linear-gradient(180deg, rgba(255, 215, 90, 0.75) 0%, rgba(232, 171, 48, 0.5) 100%);
+  background-clip: padding-box;
+  box-shadow: 0 0 10px rgba(232, 171, 48, 0.35), 0 0 4px rgba(255, 215, 90, 0.2);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, rgba(255, 215, 90, 0.85) 0%, rgba(232, 171, 48, 0.6) 100%);
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-corner {
-  background: #1a0f05;
+  background: rgba(13, 7, 3, 0.4);
 }
 
 /* Firefox */
 html {
   scrollbar-width: thin;
-  scrollbar-color: #C4901A #1a0f05;
+  scrollbar-color: rgba(232, 171, 48, 0.4) rgba(13, 7, 3, 0.4);
 }

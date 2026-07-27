@@ -1,0 +1,147 @@
+/* ---------- Section ---------- */
+.section {
+  position: relative;
+  z-index: 15;
+  padding: clamp(5rem, 10vh, 8rem) 2rem;
+  background: linear-gradient(180deg, #0d0703 0%, #1a0f05 50%, #0a0502 100%);
+  overflow: hidden;
+}
+
+.bgGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 40vh;
+  background: radial-gradient(ellipse at center, rgba(245, 194, 66, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ---------- Container ---------- */
+.container {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ---------- Header ---------- */
+.header {
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(245, 194, 66, 0.6);
+  font-family: var(--font-inter), sans-serif;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #FFD75A;
+  text-shadow: 0 2px 20px rgba(245, 194, 66, 0.15);
+  font-family: var(--font-cormorant), serif;
+  line-height: 1.2;
+}
+
+/* ---------- Divider ---------- */
+.divider {
+  width: 60%;
+  max-width: 500px;
+  height: 1px;
+  margin: 0 auto clamp(2.5rem, 5vh, 4rem);
+  background: linear-gradient(90deg, transparent 0%, rgba(245, 194, 66, 0.3) 50%, transparent 100%);
+  transform-origin: center;
+}
+
+/* ---------- Grid ---------- */
+.grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  flex-wrap: wrap;
+}
+
+/* ---------- Card ---------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 3rem);
+  position: relative;
+  min-width: 200px;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(245, 194, 66, 0.04) 0%, rgba(245, 194, 66, 0.01) 100%);
+  border: 1px solid rgba(245, 194, 66, 0.08);
+  transition: border-color 0.4s ease, background 0.4s ease;
+  z-index: -1;
+}
+
+.card:hover::before {
+  border-color: rgba(245, 194, 66, 0.2);
+  background: linear-gradient(135deg, rgba(245, 194, 66, 0.08) 0%, rgba(245, 194, 66, 0.02) 100%);
+}
+
+/* ---------- Number ---------- */
+.numberRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1em;
+}
+
+.number {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  font-style: normal;
+  color: #FFD75A;
+  font-family: var(--font-inter), sans-serif;
+  line-height: 1;
+  text-shadow: 0 4px 30px rgba(245, 194, 66, 0.2);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.suffix {
+  font-size: clamp(0.9rem, 2vw, 1.4rem);
+  font-weight: 700;
+  color: rgba(245, 194, 66, 0.7);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* ---------- Label ---------- */
+.label {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  .grid {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .card {
+    min-width: 100%;
+  }
+}

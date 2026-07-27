@@ -9,6 +9,11 @@ import MenuBook from "./components/MenuBook";
 import About from "./components/About";
 import Gallery from "./components/Gallery";
 import Experience from "./components/Experience";
+import CookingProcess from "./components/CookingProcess";
+import StatsCounter from "./components/StatsCounter";
+import Loader from "./components/Loader";
+import CustomCursor from "./components/CustomCursor";
+import Reservation from "./components/Reservation";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -16,6 +21,9 @@ export default function Home() {
 
   return (
     <>
+      <CustomCursor />
+      <Loader />
+
       {/* ==================== HERO SECTION ==================== */}
       <section id="hero" className="fixed inset-0 z-10 overflow-hidden">
         <HeroBackground />
@@ -25,21 +33,37 @@ export default function Home() {
         </main>
 
         {/* Dish name above thumbnails */}
-        <div className="absolute z-30 text-left left-1/2" style={{ bottom: "380px", transform: "translateX(calc(-50% + 40px))" }}>
-          <h2 key={activeDish} className="text-7xl leading-[1.1] max-w-[600px] mx-auto animate-[dishNameReveal_0.5s_cubic-bezier(0.33,1,0.68,1)]" style={{ animationFillMode: "both" }}>
-            <span
-              className="block font-extralight tracking-[0.04em] text-[#1a0f05] animate-[dishLineUp_0.6s_cubic-bezier(0.33,1,0.68,1)]"
-              style={{ animationFillMode: "both", fontFamily: "var(--font-fraunces), serif", letterSpacing: "0.02em" }}
-            >
-              {dishes[activeDish].name.split(" ").slice(0, -1).join(" ")}
-            </span>
-            <span
-              className="block font-black italic tracking-[-0.02em] text-[#1a0f05] animate-[dishLineUpBold_0.7s_cubic-bezier(0.33,1,0.68,1)_0.1s]"
-              style={{ animationFillMode: "both", fontFamily: "var(--font-inter), sans-serif", letterSpacing: "-0.01em" }}
-            >
-              {dishes[activeDish].name.split(" ").slice(-1).join(" ")}
-            </span>
-          </h2>
+        <div className="absolute z-30 left-1/2" style={{ bottom: "380px", transform: "translateX(calc(-50% + 40px))" }}>
+          <div key={activeDish} className="animate-[dishNameReveal_0.5s_cubic-bezier(0.33,1,0.68,1)] flex items-center gap-3" style={{ animationFillMode: "both" }}>
+            <div className="h-12 w-[3px] rounded-full" style={{ background: "linear-gradient(180deg, transparent, #0f0805, transparent)" }} />
+            <div>
+              <span
+                className="block font-bold uppercase animate-[dishLineUp_0.6s_cubic-bezier(0.33,1,0.68,1)]"
+                style={{
+                  animationFillMode: "both",
+                  fontFamily: "var(--font-cinzel-decorative), serif",
+                  fontSize: "1.4rem",
+                  letterSpacing: "0.35em",
+                  color: "#0f0805",
+                  opacity: 0.5,
+                }}
+              >
+                {dishes[activeDish].name.split(" ").slice(0, -1).join(" ")}
+              </span>
+              <h2
+                className="font-bold italic tracking-[-0.01em] animate-[dishLineUpBold_0.7s_cubic-bezier(0.33,1,0.68,1)_0.1s]"
+                style={{
+                  animationFillMode: "both",
+                  fontFamily: "var(--font-cinzel), serif",
+                  fontSize: "5.5rem",
+                  lineHeight: 1,
+                  color: "#0f0805",
+                }}
+              >
+                {dishes[activeDish].name.split(" ").slice(-1).join(" ")}
+              </h2>
+            </div>
+          </div>
         </div>
 
         {/* Bottom thumbnail strip with arrows */}
@@ -104,7 +128,7 @@ export default function Home() {
       </section>
 
       {/* Spacer to enable scrolling past the fixed hero */}
-      <div className="h-screen w-full" aria-hidden="true" />
+      <div className="h-screen w-full" aria-hidden="true" style={{ background: "linear-gradient(135deg, #E8AB30 0%, #D4951A 40%, #B88015 100%)" }} />
 
       {/* ==================== SCROLLABLE SECTIONS ==================== */}
       <MenuBook />
@@ -113,7 +137,13 @@ export default function Home() {
 
       <Experience />
 
+      <CookingProcess />
+
+      <StatsCounter />
+
       <Gallery />
+
+      <Reservation />
 
       <Footer />
     </>

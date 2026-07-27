@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { dishes } from "./useDishSync";
+import { CATEGORIES, MENU_ITEMS } from "./menuData";
 import styles from "./MenuBook.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,6 +12,30 @@ export default function MenuBook() {
   const sectionRef = useRef<HTMLElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
   const coverRef = useRef<HTMLDivElement>(null);
+  const expandBtnRef = useRef<HTMLButtonElement>(null);
+  const [activeCategory, setActiveCategory] = useState("OG Dum Biryanis");
+  const [showModal, setShowModal] = useState(false);
+  const [modalCategory, setModalCategory] = useState("OG Dum Biryanis");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const filteredItems = MENU_ITEMS.filter(
+    (item) => item.category === activeCategory
+  );
+
+  const modalItems = MENU_ITEMS.filter(
+    (item) => item.category === modalCategory
+  );
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showModal]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -31,6 +55,15 @@ export default function MenuBook() {
           start: "top top",
           end: "bottom bottom",
           scrub: 1.2,
+          onUpdate: (self) => {
+            const btn = expandBtnRef.current;
+            if (!btn) return;
+            if (self.progress > 0.85) {
+              gsap.to(btn, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" });
+            } else {
+              gsap.to(btn, { autoAlpha: 0, y: 20, duration: 0.3, ease: "power2.in" });
+            }
+          },
         },
       });
 
@@ -53,44 +86,101 @@ export default function MenuBook() {
     <section
       ref={sectionRef}
       id="menu"
-      className="relative z-20 min-h-[250vh] overflow-x-clip"
-      style={{ background: "linear-gradient(135deg, #E8AB30 0%, #D4951A 40%, #B88015 100%)" }}
+      className="relative z-20 min-h-[250vh]"
+      style={{ background: "linear-gradient(135deg, #0d0703 0%, #1a0f05 40%, #0a0502 100%)" }}
     >
       {/* Matching hero radial glows */}
-      <div className="absolute pointer-events-none" style={{ width: "55vw", height: "55vw", top: "-15vw", left: "-12vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(255,215,90,0.4) 0%, rgba(245,194,66,0.1) 45%, transparent 70%)", filter: "blur(90px)" }} />
-      <div className="absolute pointer-events-none" style={{ width: "50vw", height: "50vw", bottom: "-18vw", right: "-10vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(255,200,80,0.32) 0%, rgba(245,194,66,0.07) 50%, transparent 72%)", filter: "blur(100px)" }} />
-      <div className="absolute pointer-events-none" style={{ width: "40vw", height: "40vw", top: "30%", left: "30%", borderRadius: "50%", background: "radial-gradient(circle, rgba(255,215,90,0.2) 0%, transparent 60%)", filter: "blur(80px)" }} />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute" style={{ width: "55vw", height: "55vw", top: "-15vw", left: "-12vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(232,171,48,0.15) 0%, rgba(232,171,48,0.04) 45%, transparent 70%)", filter: "blur(90px)" }} />
+        <div className="absolute" style={{ width: "50vw", height: "50vw", bottom: "-18vw", right: "-10vw", borderRadius: "50%", background: "radial-gradient(circle, rgba(232,171,48,0.12) 0%, rgba(232,171,48,0.03) 50%, transparent 72%)", filter: "blur(100px)" }} />
+        <div className="absolute" style={{ width: "40vw", height: "40vw", top: "30%", left: "30%", borderRadius: "50%", background: "radial-gradient(circle, rgba(232,171,48,0.08) 0%, transparent 60%)", filter: "blur(80px)" }} />
+      </div>
 
       <div className="sticky top-0 h-screen flex items-center justify-center">
         <div ref={bookRef} className={styles.book}>
           {/* Right page — menu content (revealed under the cover) */}
           <div className={styles.pageRight}>
             <h2 className={styles.menuTitle}>Our Menu</h2>
-            <div className={styles.dishList}>
-              {dishes.map((dish, i) => (
-                <div key={i} className={styles.dishItem}>
-                  <div className={styles.dishNumber}>0{i + 1}</div>
-                  <div className={styles.dishInfo}>
-                    <h3 className={styles.dishName}>{dish.name}</h3>
-                    <p className={styles.dishDesc}>{dish.overview}</p>
-                    <div className={styles.dishMeta}>
-                      {dish.info.map((info, j) => (
-                        <span key={j} className={styles.metaTag}>
-                          {info.label}: {info.value}
-                        </span>
-                      ))}
-                    </div>
+
+            {/* Category dropdown */}
+            <div className={styles.dropdownWrap}>
+              <button
+                className={styles.dropdownHeader}
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <span className={styles.dropdownLabel}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 6h18M3 12h18M3 18h18" />
+                  </svg>
+                  {activeCategory}
+                </span>
+                <svg
+                  className={`${styles.dropdownChevron} ${dropdownOpen ? styles.dropdownChevronOpen : ""}`}
+                  width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                >
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+
+              {dropdownOpen && (
+                <>
+                  <div className={styles.dropdownBackdrop} onClick={() => setDropdownOpen(false)} />
+                  <div className={styles.dropdownPanel}>
+                    {CATEGORIES.map((cat) => (
+                      <button
+                        key={cat}
+                        className={`${styles.dropdownOption} ${activeCategory === cat ? styles.dropdownOptionActive : ""}`}
+                        onClick={() => {
+                          setActiveCategory(cat);
+                          setDropdownOpen(false);
+                        }}
+                      >
+                        <span className={styles.dropdownOptionDot} />
+                        {cat}
+                        {activeCategory === cat && (
+                          <svg className={styles.dropdownCheck} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M20 6L9 17l-5-5" />
+                          </svg>
+                        )}
+                      </button>
+                    ))}
                   </div>
+                </>
+              )}
+            </div>
+
+            {/* Filtered menu items */}
+            <div className={styles.menuItemList}>
+              {filteredItems.map((item, i) => (
+                <div key={i} className={styles.menuItemRow}>
+                  <div className={styles.menuItemInfo}>
+                    <h3 className={styles.menuItemName}>{item.name}</h3>
+                    <p className={styles.menuItemDesc}>{item.desc}</p>
+                  </div>
+                  <span className={styles.menuItemPrice}>{item.price}</span>
                 </div>
               ))}
             </div>
+
             <button className={styles.viewAllBtn}>
-              View All
+              Order Now
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </button>
           </div>
+
+          {/* Expand button — appears when book is fully open */}
+          <button
+            ref={expandBtnRef}
+            className={styles.expandBtn}
+            onClick={() => setShowModal(true)}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+            </svg>
+            View Full Menu
+          </button>
 
           {/* Cover — starts closed over the right page, flips to the left */}
           <div ref={coverRef} className={styles.cover}>
@@ -119,13 +209,70 @@ export default function MenuBook() {
             </div>
           </div>
 
-          {/* Spine shadow */}
-          <div className={styles.spine} />
-
-          {/* Stacked page edge for book thickness */}
-          <div className={styles.pageStack} />
         </div>
       </div>
+
+      {/* ==================== Full Screen Menu Modal ==================== */}
+      {showModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            {/* Close button */}
+            <button
+              className={styles.modalClose}
+              onClick={() => setShowModal(false)}
+              aria-label="Close menu"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Modal header */}
+            <div className={styles.modalHeader}>
+              <div className={styles.modalOrnament} />
+              <h2 className={styles.modalTitle}>Mr Biryani</h2>
+              <p className={styles.modalSubtitle}>Royal Kitchen — Full Menu</p>
+              <div className={styles.modalDivider} />
+            </div>
+
+            {/* Category filters */}
+            <div className={styles.modalFilterRow}>
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  className={`${styles.modalFilterChip} ${modalCategory === cat ? styles.modalFilterChipActive : ""}`}
+                  onClick={() => setModalCategory(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            {/* Menu items grid */}
+            <div className={styles.modalGrid}>
+              {modalItems.map((item, i) => (
+                <div key={i} className={styles.modalCard}>
+                  <div className={styles.modalCardInfo}>
+                    <h3 className={styles.modalCardName}>{item.name}</h3>
+                    <p className={styles.modalCardDesc}>{item.desc}</p>
+                  </div>
+                  <div className={styles.modalCardRight}>
+                    <span className={styles.modalCardPrice}>{item.price}</span>
+                    <button className={styles.addToCartBtn}>Add to cart</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Modal footer */}
+            <div className={styles.modalFooter}>
+              <span className={styles.modalFooterText}>
+                {MENU_ITEMS.length} dishes across {CATEGORIES.length} categories
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

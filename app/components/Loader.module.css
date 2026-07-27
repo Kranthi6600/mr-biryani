@@ -1,0 +1,176 @@
+/* ---------- Overlay ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ---------- Curtains ---------- */
+.curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  z-index: 2;
+  will-change: transform;
+}
+
+.curtainLeft {
+  left: 0;
+  background: linear-gradient(90deg,
+    #0a0503 0%,
+    #120904 40%,
+    #1a0e06 80%,
+    #0d0703 100%
+  );
+  box-shadow: inset -8px 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.curtainRight {
+  right: 0;
+  background: linear-gradient(270deg,
+    #0a0503 0%,
+    #120904 40%,
+    #1a0e06 80%,
+    #0d0703 100%
+  );
+  box-shadow: inset 8px 0 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Subtle gold seam in middle */
+.curtainLeft::after,
+.curtainRight::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(245, 194, 66, 0.15) 30%,
+    rgba(245, 194, 66, 0.25) 50%,
+    rgba(245, 194, 66, 0.15) 70%,
+    transparent 100%
+  );
+}
+
+.curtainLeft::after {
+  right: 0;
+}
+
+.curtainRight::after {
+  left: 0;
+}
+
+/* ---------- Content ---------- */
+.content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ---------- Steam ---------- */
+.steamContainer {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.steamPuff {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 252, 245, 0.4) 0%,
+    rgba(255, 248, 230, 0.15) 35%,
+    transparent 70%
+  );
+  filter: blur(6px);
+  opacity: 0;
+  animation: loaderSteamRise var(--puff-duration, 2.5s) ease-out var(--puff-delay, 0s) infinite;
+}
+
+@keyframes loaderSteamRise {
+  0% {
+    transform: translate(-50%, 0) scale(0.2);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.5;
+    transform: translate(-50%, -15%) scale(0.5);
+  }
+  50% {
+    transform: translate(calc(-50% + var(--puff-drift, 0px) * 0.5), -50%) scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--puff-drift, 0px)), -100%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+}
+
+.logoMr {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(245, 194, 66, 0.6);
+  font-family: var(--font-cormorant), serif;
+  letter-spacing: 0.05em;
+}
+
+.logoBiryani {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 700;
+  font-style: italic;
+  color: #FFD75A;
+  font-family: var(--font-cormorant), serif;
+  text-shadow:
+    0 2px 20px rgba(245, 194, 66, 0.3),
+    0 4px 40px rgba(245, 194, 66, 0.15);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* ---------- Tagline ---------- */
+.tagline {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.taglineLine {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 194, 66, 0.4), transparent);
+}
+
+.taglineText {
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(245, 194, 66, 0.5);
+  font-family: var(--font-inter), sans-serif;
+  white-space: nowrap;
+}

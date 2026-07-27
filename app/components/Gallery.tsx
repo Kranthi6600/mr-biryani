@@ -46,12 +46,12 @@ export default function Gallery() {
           span.textContent = char;
           span.style.display = "inline-block";
           span.style.background =
-            "linear-gradient(135deg, #1a0f05 0%, #3a2510 30%, #1a0f05 60%, #2a1a08 100%)";
+            "linear-gradient(135deg, #f5c242 0%, #e8ab30 30%, #f5c242 60%, #d4951a 100%)";
           span.style.setProperty("-webkit-background-clip", "text");
           span.style.backgroundClip = "text";
           span.style.setProperty("-webkit-text-fill-color", "transparent");
           span.style.filter =
-            "drop-shadow(1px 1px 0 rgba(0,0,0,0.35)) drop-shadow(2px 2px 0 rgba(0,0,0,0.22)) drop-shadow(4px 4px 12px rgba(0,0,0,0.35)) drop-shadow(0 2px 4px rgba(255,244,214,0.2))";
+            "drop-shadow(1px 1px 0 rgba(0,0,0,0.5)) drop-shadow(2px 2px 0 rgba(0,0,0,0.35)) drop-shadow(4px 4px 12px rgba(0,0,0,0.5)) drop-shadow(0 2px 8px rgba(232,171,48,0.3))";
           titleEl.appendChild(span);
           letterEls.push(span);
         });
@@ -159,18 +159,18 @@ export default function Gallery() {
       className="relative z-20 px-6 py-32 overflow-hidden"
       style={{
         background:
-          "radial-gradient(ellipse at 30% 20%, rgba(255, 244, 214, 0.15) 0%, transparent 50%)," +
-          "radial-gradient(ellipse at 70% 80%, rgba(196, 144, 26, 0.2) 0%, transparent 50%)," +
-          "linear-gradient(135deg, #E8AB30 0%, #D4951A 40%, #B88015 100%)",
+          "radial-gradient(ellipse at 30% 20%, rgba(232, 171, 48, 0.12) 0%, transparent 50%)," +
+          "radial-gradient(ellipse at 70% 80%, rgba(196, 144, 26, 0.08) 0%, transparent 50%)," +
+          "linear-gradient(135deg, #0d0703 0%, #1a0f05 40%, #0a0502 100%)",
       }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 15% 25%, rgba(26, 15, 5, 0.05) 0%, transparent 40%)," +
-            "radial-gradient(circle at 85% 75%, rgba(26, 15, 5, 0.04) 0%, transparent 40%)," +
-            "radial-gradient(circle at 50% 50%, rgba(255, 244, 214, 0.08) 0%, transparent 60%)",
+            "radial-gradient(circle at 15% 25%, rgba(232, 171, 48, 0.04) 0%, transparent 40%)," +
+            "radial-gradient(circle at 85% 75%, rgba(232, 171, 48, 0.03) 0%, transparent 40%)," +
+            "radial-gradient(circle at 50% 50%, rgba(245, 194, 66, 0.05) 0%, transparent 60%)",
         }}
       />
       <div className="max-w-6xl mx-auto relative">
@@ -180,8 +180,8 @@ export default function Gallery() {
             className="text-xs tracking-[0.45em] uppercase font-semibold"
             style={{
               fontFamily: "var(--font-inter), sans-serif",
-              color: "rgba(26, 15, 5, 0.65)",
-              textShadow: "0 1px 2px rgba(255, 244, 214, 0.3)",
+              color: "rgba(232, 171, 48, 0.65)",
+              textShadow: "0 1px 2px rgba(232, 171, 48, 0.2)",
             }}
           >
             Visual Feast
@@ -202,9 +202,9 @@ export default function Gallery() {
             className="flex items-center justify-center gap-3 mt-6"
             style={{ transformOrigin: "center" }}
           >
-            <div className="w-20 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(26,15,5,0.35), transparent)" }} />
-            <div className="w-2.5 h-2.5 rotate-45" style={{ background: "rgba(26,15,5,0.45)", boxShadow: "0 1px 2px rgba(255,244,214,0.2)" }} />
-            <div className="w-20 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(26,15,5,0.35), transparent)" }} />
+            <div className="w-20 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(232,171,48,0.35), transparent)" }} />
+            <div className="w-2.5 h-2.5 rotate-45" style={{ background: "rgba(232,171,48,0.5)", boxShadow: "0 1px 2px rgba(232,171,48,0.2)" }} />
+            <div className="w-20 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(232,171,48,0.35), transparent)" }} />
           </div>
         </div>
 
