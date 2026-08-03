@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 export const dishes = [
   {
@@ -95,17 +95,41 @@ export const dishes = [
 
 export function useDishSync() {
   const [activeDish, setActiveDish] = useState(0);
+  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const pauseAutoRotate = useCallback(() => {
+    if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+    pauseTimerRef.current = setTimeout(() => {
+      pauseTimerRef.current = null;
+    }, 8000);
+  }, []);
 
   const goToDish = useCallback((index: number) => {
+    pauseAutoRotate();
     setActiveDish(index);
-  }, []);
+  }, [pauseAutoRotate]);
 
   const prevDish = useCallback(() => {
+    pauseAutoRotate();
     setActiveDish((prev) => (prev - 1 + dishes.length) % dishes.length);
-  }, []);
+  }, [pauseAutoRotate]);
 
   const nextDish = useCallback(() => {
+    pauseAutoRotate();
     setActiveDish((prev) => (prev + 1) % dishes.length);
+  }, [pauseAutoRotate]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!pauseTimerRef.current) {
+        setActiveDish((prev) => (prev + 1) % dishes.length);
+      }
+    }, 4000);
+
+    return () => {
+      clearInterval(interval);
+      if (pauseTimerRef.current) clearTimeout(pauseTimerRef.current);
+    };
   }, []);
 
   return { activeDish, goToDish, prevDish, nextDish };

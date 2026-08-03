@@ -42,13 +42,15 @@ export default function About() {
       const letterEls = title.querySelectorAll(`.${styles.letter}`);
       if (!letterEls.length) return;
 
+      const isMobile = window.innerWidth < 640;
+
       gsap.set(letterEls, {
-        z: 800,
+        z: isMobile ? 200 : 800,
         opacity: 0,
-        rotateX: -90,
-        scale: 2,
+        rotateX: isMobile ? -45 : -90,
+        scale: isMobile ? 1.3 : 2,
         transformOrigin: "center center",
-        filter: "blur(8px)",
+        filter: isMobile ? "blur(4px)" : "blur(8px)",
       });
 
       const tl = gsap.timeline({
@@ -105,8 +107,9 @@ export default function About() {
         .to(testimonialEls, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "back.out(1.2)", duration: 1.2, stagger: 0.3 }, 1.3)
         .to(flourishRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "expo.out", duration: 1.2 }, 2.4);
 
-      // Parallax depth + spotlight on testimonial hover
-      (testimonialEls as HTMLElement[]).forEach((card) => {
+      // Parallax depth + spotlight on testimonial hover (desktop only)
+      if (window.innerWidth >= 768) {
+        (testimonialEls as HTMLElement[]).forEach((card) => {
         const spotlight = card.querySelector(`.${styles.spotlight}`) as HTMLElement | null;
         const quote = card.querySelector(`.${styles.quoteMark}`) as HTMLElement | null;
         const text = card.querySelector(`.${styles.testimonialText}`) as HTMLElement | null;
@@ -139,6 +142,7 @@ export default function About() {
           if (author) gsap.to(author, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.5)" });
         });
       });
+      }
     }, sectionRef);
 
     return () => ctx.revert();

@@ -70,14 +70,14 @@ export default function DiningTable({ activeDish }: { activeDish: number }) {
             <Steam counterRotation={counterRotation} />
           </div>
           <div className={`${styles.plate} ${styles.plate90}`}>
-            <div key={`p2-${activeDish}`} className={`${styles.plateInner} ${styles.plateInnerActive}`}>
-              <img src={dishes[2].img} alt="" className={styles.plateImg} />
+            <div key={`p3-${activeDish}`} className={`${styles.plateInner} ${styles.plateInnerActive}`}>
+              <img src={dishes[3].img} alt="" className={styles.plateImg} />
             </div>
             <Steam counterRotation={counterRotation} />
           </div>
           <div className={`${styles.plate} ${styles.plate180}`}>
-            <div key={`p3-${activeDish}`} className={`${styles.plateInner} ${styles.plateInnerActive}`}>
-              <img src={dishes[3].img} alt="" className={styles.plateImg} />
+            <div key={`p2-${activeDish}`} className={`${styles.plateInner} ${styles.plateInnerActive}`}>
+              <img src={dishes[2].img} alt="" className={styles.plateImg} />
             </div>
             <Steam counterRotation={counterRotation} />
           </div>

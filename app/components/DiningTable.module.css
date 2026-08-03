@@ -114,6 +114,29 @@
 @media (max-width: 640px) {
   .table {
     transform: translate(-50vw, -50vh) rotate(40deg);
+    width: clamp(320px, 120vmin, 1500px);
+    height: clamp(320px, 120vmin, 1500px);
+  }
+
+  .plate {
+    width: clamp(100px, 38vmin, 460px);
+    height: clamp(100px, 38vmin, 460px);
+  }
+
+  .plate0 {
+    transform: translate(-50%, -50%) translate(0px, calc(-48vmin));
+  }
+
+  .plate45 {
+    transform: translate(-50%, -50%) translate(calc(-48vmin), 0px);
+  }
+
+  .plate90 {
+    transform: translate(-50%, -50%) translate(calc(48vmin), 0px);
+  }
+
+  .plate180 {
+    transform: translate(-50%, -50%) translate(0px, calc(48vmin));
   }
 }
 

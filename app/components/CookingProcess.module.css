@@ -3,7 +3,14 @@
   position: relative;
   z-index: 20;
   height: 500vh;
+  flex-shrink: 0;
   background: linear-gradient(180deg, #0d0703 0%, #1a0f05 40%, #0a0502 70%, #0d0703 100%);
+}
+
+@media (max-width: 768px) {
+  .section {
+    display: none !important;
+  }
 }
 
 .glowLeft {

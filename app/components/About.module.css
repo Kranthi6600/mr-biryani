@@ -391,16 +391,118 @@
     margin-top: 56px;
   }
 
-  .taglineRow {
-    flex-direction: column;
-    gap: 12px;
-  }
-
   .taglineDivider {
-    display: none;
+    width: 6px;
+    height: 6px;
   }
 
   .headerLine {
     max-width: 50px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 80px 16px 60px;
+  }
+
+  .headerRow {
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .headerLine {
+    max-width: 30px;
+  }
+
+  .headerLabel {
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+  }
+
+  .title {
+    font-size: clamp(2rem, 9vw, 3rem);
+    margin-bottom: 4px;
+  }
+
+  .ornament {
+    gap: 10px;
+    margin: 20px 0 36px;
+  }
+
+  .ornamentLine {
+    width: 60px;
+  }
+
+  .bodyText {
+    font-size: 0.92rem;
+    line-height: 1.8;
+    max-width: 100%;
+  }
+
+  .taglineRow {
+    margin: 36px 0 12px;
+    gap: clamp(10px, 3vw, 18px);
+  }
+
+  .taglineItem {
+    font-size: 1rem;
+  }
+
+  .taglinePromise {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+  }
+
+  .testimonials {
+    gap: 14px;
+    margin-top: 40px;
+  }
+
+  .testimonial {
+    padding: 28px 20px 22px;
+    border-radius: 14px;
+  }
+
+  .quoteMark {
+    font-size: 3rem;
+    margin-bottom: 8px;
+  }
+
+  .testimonialText {
+    font-size: 0.84rem;
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  .testimonialAuthor {
+    padding-top: 14px;
+  }
+
+  .authorName {
+    font-size: 0.9rem;
+  }
+
+  .authorRole {
+    font-size: 0.65rem;
+  }
+
+  .flourish {
+    gap: 12px;
+    margin-top: 50px;
+  }
+
+  .flourishLine {
+    width: 50px;
+  }
+
+  .glowLeft {
+    width: 70vw;
+    height: 70vw;
+  }
+
+  .glowRight {
+    width: 65vw;
+    height: 65vw;
   }
 }

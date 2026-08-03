@@ -25,6 +25,8 @@ export default function Gallery() {
   const ornamentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
     const ctx = gsap.context(() => {
       const section = sectionRef.current;
       if (!section) return;
@@ -64,15 +66,15 @@ export default function Gallery() {
       imageEls.forEach((el, i) => {
         const fromLeft = i % 2 === 0;
         gsap.set(el, {
-          x: fromLeft ? -150 : 150,
-          y: 100,
-          z: -600,
+          x: fromLeft ? (isMobile ? -60 : -150) : (isMobile ? 60 : 150),
+          y: isMobile ? 40 : 100,
+          z: isMobile ? -100 : -600,
           opacity: 0,
-          scale: 0.6,
-          rotateY: fromLeft ? -75 : 75,
-          rotateX: 25,
+          scale: isMobile ? 0.85 : 0.6,
+          rotateY: fromLeft ? (isMobile ? -20 : -75) : (isMobile ? 20 : 75),
+          rotateX: isMobile ? 8 : 25,
           transformOrigin: "center center",
-          filter: "blur(16px)",
+          filter: isMobile ? "blur(6px)" : "blur(16px)",
         });
       });
 
@@ -110,7 +112,8 @@ export default function Gallery() {
           stagger: 0.25,
         }, 0.3);
 
-      // Parallax depth hover on each gallery item
+      // Parallax depth hover on each gallery item (desktop only)
+      if (!isMobile) {
       imageEls.forEach((el) => {
         const item = el as HTMLElement;
         const img = item.querySelector(".galleryImg");
@@ -147,6 +150,7 @@ export default function Gallery() {
           if (caption) gsap.to(caption, { y: 16, opacity: 0, duration: 0.4 });
         });
       });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -156,7 +160,7 @@ export default function Gallery() {
     <section
       ref={sectionRef}
       id="gallery"
-      className="relative z-20 px-6 py-32 overflow-hidden"
+      className="relative z-20 px-4 sm:px-6 py-20 sm:py-32 overflow-hidden"
       style={{
         background:
           "radial-gradient(ellipse at 30% 20%, rgba(232, 171, 48, 0.12) 0%, transparent 50%)," +
@@ -188,7 +192,7 @@ export default function Gallery() {
           </span>
           <h3
             ref={titleRef}
-            className="text-5xl sm:text-6xl font-black italic mt-4"
+            className="text-4xl sm:text-5xl md:text-6xl font-black italic mt-4"
             style={{
               fontFamily: "var(--font-cormorant), serif",
               lineHeight: 1.25,
@@ -208,7 +212,7 @@ export default function Gallery() {
           </div>
         </div>
 
-        <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]" style={{ perspective: "800px" }}>
+        <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 auto-rows-[140px] sm:auto-rows-[200px]" style={{ perspective: "800px" }}>
           {GALLERY_IMAGES.map((img, i) => (
             <div
               key={i}
@@ -233,7 +237,7 @@ export default function Gallery() {
                 alt={img.alt}
                 fill
                 className="galleryImg object-cover"
-                sizes="(max-width: 768px) 50vw, 25vw"
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
                 style={{ willChange: "transform" }}
               />
               <div

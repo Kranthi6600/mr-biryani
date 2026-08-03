@@ -34,9 +34,11 @@ export default function Experience() {
       const titleWordEls = titleRef.current?.querySelectorAll("[data-word]") || [];
       const bodyWordEls = bodyRef.current?.querySelectorAll("[data-word]") || [];
 
-      gsap.set(titleWordEls, { y: "100%", opacity: 0, rotateX: -90 });
+      const isMobile = window.innerWidth < 640;
+
+      gsap.set(titleWordEls, { y: "100%", opacity: 0, rotateX: isMobile ? -45 : -90 });
       gsap.set(bodyWordEls, { y: 20, opacity: 0 });
-      gsap.set([subtitleRef.current, buttonRef.current], { y: 60, opacity: 0, scale: 0.92, filter: "blur(12px)" });
+      gsap.set([subtitleRef.current, buttonRef.current], { y: isMobile ? 30 : 60, opacity: 0, scale: isMobile ? 0.96 : 0.92, filter: isMobile ? "blur(6px)" : "blur(12px)" });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -127,8 +129,8 @@ export default function Experience() {
         });
       }
 
-      // Magnetic button effect
-      if (buttonRef.current) {
+      // Magnetic button effect (desktop only)
+      if (buttonRef.current && !isMobile) {
         const btn = buttonRef.current;
         btn.addEventListener("mousemove", (e: MouseEvent) => {
           const rect = btn.getBoundingClientRect();
@@ -149,7 +151,7 @@ export default function Experience() {
     <section
       ref={sectionRef}
       id="experience"
-      className="relative z-20 min-h-screen flex items-center justify-center px-6 py-32 overflow-x-hidden"
+      className="relative z-20 min-h-screen flex items-center justify-center px-4 py-20 sm:px-6 sm:py-32 overflow-x-hidden"
       style={{
         background:
           "radial-gradient(ellipse at 30% 20%, rgba(232, 171, 48, 0.12) 0%, transparent 50%)," +
@@ -193,9 +195,9 @@ export default function Experience() {
           ref={ringRef}
           className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
           style={{
-            top: "-30px",
-            width: "320px",
-            height: "120px",
+            top: "-20px",
+            width: "clamp(200px, 60vw, 320px)",
+            height: "clamp(80px, 25vw, 120px)",
             borderRadius: "50%",
             border: "1px solid rgba(232, 171, 48, 0.2)",
             opacity: 0.3,
@@ -205,7 +207,7 @@ export default function Experience() {
         <div style={{ perspective: "800px" }}>
           <h3
             ref={titleRef}
-            className="text-5xl sm:text-6xl font-black italic mb-6"
+            className="text-3xl sm:text-5xl md:text-6xl font-black italic mb-4 sm:mb-6"
             style={{
               fontFamily: "var(--font-cormorant), serif",
               lineHeight: 1.25,
@@ -236,7 +238,7 @@ export default function Experience() {
 
         <p
           ref={subtitleRef}
-          className="text-xl sm:text-2xl mb-8"
+          className="text-base sm:text-xl md:text-2xl mb-6 sm:mb-8"
           style={{
             fontFamily: "var(--font-fraunces), serif",
             color: "rgba(245, 194, 66, 0.75)",
@@ -251,13 +253,13 @@ export default function Experience() {
         {/* Ornamental divider */}
         <div
           ref={ornamentRef}
-          className="flex items-center justify-center gap-3 my-8"
+          className="flex items-center justify-center gap-2 sm:gap-3 my-6 sm:my-8"
         >
           <span
             data-line
             className="inline-block"
             style={{
-              width: "60px",
+              width: "40px",
               height: "1px",
               background: "linear-gradient(90deg, transparent, rgba(232, 171, 48, 0.35), transparent)",
               transformOrigin: "center",
@@ -277,7 +279,7 @@ export default function Experience() {
             data-line
             className="inline-block"
             style={{
-              width: "60px",
+              width: "40px",
               height: "1px",
               background: "linear-gradient(90deg, transparent, rgba(232, 171, 48, 0.35), transparent)",
               transformOrigin: "center",
@@ -287,7 +289,7 @@ export default function Experience() {
 
         <p
           ref={bodyRef}
-          className="text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-12"
+          className="text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-12"
           style={{
             fontFamily: "var(--font-inter), sans-serif",
             color: "rgba(245, 194, 66, 0.65)",
@@ -304,7 +306,7 @@ export default function Experience() {
         </p>
         <button
           ref={buttonRef}
-          className="group relative inline-flex items-center gap-3 rounded-full px-12 py-5 text-sm font-bold tracking-[0.2em] uppercase cursor-pointer"
+          className="group relative inline-flex items-center gap-2 sm:gap-3 rounded-full px-8 sm:px-12 py-4 sm:py-5 text-xs sm:text-sm font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase cursor-pointer"
           style={{
             background: "linear-gradient(135deg, #1a0f05 0%, #2a1a08 50%, #1a0f05 100%)",
             color: "#FFD75A",
@@ -337,7 +339,7 @@ export default function Experience() {
               padding: "1px",
             }}
           />
-          <span className="relative tracking-[0.25em]" style={{ textShadow: "0 1px 4px rgba(255,215,90,0.15)" }}>View Our Menu</span>
+          <span className="relative tracking-[0.2em] sm:tracking-[0.25em]" style={{ textShadow: "0 1px 4px rgba(255,215,90,0.15)" }}>View Our Menu</span>
           <svg className="relative transition-all duration-500 group-hover:translate-x-1.5 group-hover:stroke-[#FFD75A]" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: "drop-shadow(0 0 4px rgba(255,215,90,0.3))" }}>
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>

@@ -106,7 +106,7 @@ export default function Overview({
 
   return (
     <div
-      className="absolute top-1/2 right-4 sm:right-6 md:right-8 z-20 w-[clamp(260px,22vw,360px)] h-[clamp(420px,70vh,680px)]"
+      className="absolute top-1/2 right-4 sm:right-6 md:right-8 z-20 hidden sm:block w-[clamp(240px,22vw,360px)] h-[clamp(380px,62vh,680px)]"
       style={{
         transform: "translateY(-50%)",
       }}

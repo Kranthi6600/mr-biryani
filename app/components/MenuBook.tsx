@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CATEGORIES, MENU_ITEMS } from "./menuData";
@@ -12,7 +13,6 @@ export default function MenuBook() {
   const sectionRef = useRef<HTMLElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
   const coverRef = useRef<HTMLDivElement>(null);
-  const expandBtnRef = useRef<HTMLButtonElement>(null);
   const [activeCategory, setActiveCategory] = useState("OG Dum Biryanis");
   const [showModal, setShowModal] = useState(false);
   const [modalCategory, setModalCategory] = useState("OG Dum Biryanis");
@@ -38,6 +38,9 @@ export default function MenuBook() {
   }, [showModal]);
 
   useEffect(() => {
+    // Skip book animation on mobile
+    if (window.innerWidth < 768) return;
+
     const ctx = gsap.context(() => {
       const section = sectionRef.current;
       const book = bookRef.current;
@@ -55,15 +58,6 @@ export default function MenuBook() {
           start: "top top",
           end: "bottom bottom",
           scrub: 1.2,
-          onUpdate: (self) => {
-            const btn = expandBtnRef.current;
-            if (!btn) return;
-            if (self.progress > 0.85) {
-              gsap.to(btn, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" });
-            } else {
-              gsap.to(btn, { autoAlpha: 0, y: 20, duration: 0.3, ease: "power2.in" });
-            }
-          },
         },
       });
 
@@ -86,7 +80,7 @@ export default function MenuBook() {
     <section
       ref={sectionRef}
       id="menu"
-      className="relative z-20 min-h-[250vh]"
+      className="relative z-20 min-h-0 md:min-h-[250vh] max-md:py-16 overflow-x-clip flex-shrink-0"
       style={{ background: "linear-gradient(135deg, #0d0703 0%, #1a0f05 40%, #0a0502 100%)" }}
     >
       {/* Matching hero radial glows */}
@@ -96,6 +90,47 @@ export default function MenuBook() {
         <div className="absolute" style={{ width: "40vw", height: "40vw", top: "30%", left: "30%", borderRadius: "50%", background: "radial-gradient(circle, rgba(232,171,48,0.08) 0%, transparent 60%)", filter: "blur(80px)" }} />
       </div>
 
+      {/* ==================== Mobile Menu Preview ==================== */}
+      <div className="md:hidden relative z-10 px-5 mx-auto max-w-md py-16">
+        <div className="text-center mb-8">
+          <div className={styles.modalOrnament} />
+          <h2 className={styles.modalTitle}>Mr Biryani</h2>
+          <p className={styles.modalSubtitle}>Royal Kitchen — Menu</p>
+          <div className={styles.modalDivider} />
+        </div>
+
+        <div className={styles.menuItemList}>
+          {MENU_ITEMS.filter((i) => i.category === "OG Dum Biryanis").slice(0, 3).map((item) => (
+            <div key={item.name} className={styles.menuItemRow}>
+              <div className={styles.menuItemInfo}>
+                <h3 className={styles.menuItemName}>{item.name}</h3>
+                <p className={styles.menuItemDesc}>{item.desc}</p>
+              </div>
+              <div className={styles.menuItemRight}>
+                <span className={styles.menuItemPrice}>{item.price}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Link
+          href="/menu"
+          className="flex w-full items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-base shadow-lg active:scale-95 transition-transform mt-8"
+          style={{
+            background: "linear-gradient(135deg, #E8AB30 0%, #D4951A 100%)",
+            color: "#1a0f05",
+            boxShadow: "0 8px 28px rgba(232, 171, 48, 0.4)",
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 6h18M3 12h18M3 18h18" />
+          </svg>
+          View Full Menu
+        </Link>
+      </div>
+
+      {/* ==================== Desktop Book Animation ==================== */}
+      <div className="hidden md:block h-[250vh]">
       <div className="sticky top-0 h-screen flex items-center justify-center">
         <div ref={bookRef} className={styles.book}>
           {/* Right page — menu content (revealed under the cover) */}
@@ -162,25 +197,13 @@ export default function MenuBook() {
               ))}
             </div>
 
-            <button className={styles.viewAllBtn}>
-              Order Now
+            <button className={styles.viewAllBtn} onClick={() => setShowModal(true)}>
+              View Full Menu
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </button>
           </div>
-
-          {/* Expand button — appears when book is fully open */}
-          <button
-            ref={expandBtnRef}
-            className={styles.expandBtn}
-            onClick={() => setShowModal(true)}
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-            </svg>
-            View Full Menu
-          </button>
 
           {/* Cover — starts closed over the right page, flips to the left */}
           <div ref={coverRef} className={styles.cover}>
@@ -210,6 +233,7 @@ export default function MenuBook() {
           </div>
 
         </div>
+      </div>
       </div>
 
       {/* ==================== Full Screen Menu Modal ==================== */}

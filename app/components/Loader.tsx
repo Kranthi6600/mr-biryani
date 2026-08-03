@@ -1,8 +1,22 @@
 "use client";
 
-import { useRef, useLayoutEffect, useState } from "react";
+import { useRef, useLayoutEffect, useState, useSyncExternalStore } from "react";
 import gsap from "gsap";
 import styles from "./Loader.module.css";
+
+const MOBILE_QUERY = "(max-width: 768px)";
+
+function useIsMobile() {
+  return useSyncExternalStore(
+    (callback) => {
+      const mq = window.matchMedia(MOBILE_QUERY);
+      mq.addEventListener("change", callback);
+      return () => mq.removeEventListener("change", callback);
+    },
+    () => window.matchMedia(MOBILE_QUERY).matches,
+    () => false,
+  );
+}
 
 const STEAM_PUFFS = [
   { left: 20, delay: 0, duration: 2.5, drift: -6, size: 30 },
@@ -20,8 +34,10 @@ export default function Loader() {
   const steamRef = useRef<HTMLDivElement>(null);
   const taglineRef = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState(false);
+  const isMobile = useIsMobile();
 
   useLayoutEffect(() => {
+    if (isMobile) return;
     const container = containerRef.current;
     if (!container) return;
 
@@ -87,9 +103,9 @@ export default function Loader() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
-  if (done) return null;
+  if (done || isMobile) return null;
 
   return (
     <div ref={containerRef} className={styles.overlay}>

@@ -9,6 +9,12 @@
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .overlay {
+    display: none !important;
+  }
+}
+
 /* ---------- Curtains ---------- */
 .curtain {
   position: absolute;
