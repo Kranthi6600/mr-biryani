@@ -15,6 +15,8 @@ import StatsCounter from "./components/StatsCounter";
 import Loader from "./components/Loader";
 import CustomCursor from "./components/CustomCursor";
 import Reservation from "./components/Reservation";
+import Locations from "./components/Locations";
+import GiftCards from "./components/GiftCards";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -163,7 +165,11 @@ export default function Home() {
 
       <Gallery />
 
+      <Locations />
+
       <Reservation />
+
+      <GiftCards />
 
       <Footer />
 

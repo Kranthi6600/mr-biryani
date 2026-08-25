@@ -50,7 +50,6 @@ export default function About() {
         rotateX: isMobile ? -45 : -90,
         scale: isMobile ? 1.3 : 2,
         transformOrigin: "center center",
-        filter: isMobile ? "blur(4px)" : "blur(8px)",
       });
 
       const tl = gsap.timeline({
@@ -67,7 +66,6 @@ export default function About() {
         opacity: 1,
         rotateX: 0,
         scale: 1,
-        filter: "blur(0px)",
         ease: "expo.out",
         stagger: { each: 0.25, from: "start" },
       });
@@ -82,12 +80,12 @@ export default function About() {
         flourishRef.current,
       ].filter(Boolean);
 
-      gsap.set(contentEls, { y: 80, opacity: 0, scale: 0.95, filter: "blur(10px)" });
+      gsap.set(contentEls, { y: 80, opacity: 0, scale: 0.95 });
 
       const testimonialEls = testimonialsRef.current
         ? Array.from(testimonialsRef.current.querySelectorAll(`.${styles.testimonial}`))
         : [];
-      gsap.set(testimonialEls, { y: 60, opacity: 0, scale: 0.9, filter: "blur(8px)" });
+      gsap.set(testimonialEls, { y: 60, opacity: 0, scale: 0.9 });
 
       const contentTl = gsap.timeline({
         scrollTrigger: {
@@ -99,13 +97,13 @@ export default function About() {
       });
 
       contentTl
-        .to(headerRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "expo.out", duration: 1.2 }, 0)
-        .to(ornamentRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "expo.out", duration: 1.2 }, 0.25)
-        .to(bodyRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "expo.out", duration: 1.2 }, 0.5)
-        .to(taglineRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "expo.out", duration: 1.2 }, 0.8)
-        .to(promiseRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "expo.out", duration: 1.2 }, 1.0)
-        .to(testimonialEls, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "back.out(1.2)", duration: 1.2, stagger: 0.3 }, 1.3)
-        .to(flourishRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "expo.out", duration: 1.2 }, 2.4);
+        .to(headerRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0)
+        .to(ornamentRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0.25)
+        .to(bodyRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0.5)
+        .to(taglineRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0.8)
+        .to(promiseRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 1.0)
+        .to(testimonialEls, { y: 0, opacity: 1, scale: 1, ease: "back.out(1.2)", duration: 1.2, stagger: 0.3 }, 1.3)
+        .to(flourishRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 2.4);
 
       // Parallax depth + spotlight on testimonial hover (desktop only)
       if (window.innerWidth >= 768) {
@@ -115,7 +113,13 @@ export default function About() {
         const text = card.querySelector(`.${styles.testimonialText}`) as HTMLElement | null;
         const author = card.querySelector(`.${styles.testimonialAuthor}`) as HTMLElement | null;
 
-        card.addEventListener("mousemove", (e: MouseEvent) => {
+        let rafId: number | null = null;
+        let lastE: MouseEvent | null = null;
+
+        const flush = () => {
+          rafId = null;
+          const e = lastE;
+          if (!e) return;
           const rect = card.getBoundingClientRect();
           const px = (e.clientX - rect.left) / rect.width;
           const py = (e.clientY - rect.top) / rect.height;
@@ -133,9 +137,18 @@ export default function About() {
           if (quote) gsap.to(quote, { x: cx * 20, y: cy * 16, duration: 0.5, ease: "power3.out" });
           if (text) gsap.to(text, { x: cx * 8, y: cy * 6, duration: 0.5, ease: "power3.out" });
           if (author) gsap.to(author, { x: cx * 4, y: cy * 3, duration: 0.5, ease: "power3.out" });
-        });
+        };
+
+        const onMove = (e: MouseEvent) => {
+          lastE = e;
+          if (rafId === null) rafId = requestAnimationFrame(flush);
+        };
+
+        card.addEventListener("mousemove", onMove);
 
         card.addEventListener("mouseleave", () => {
+          if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+          lastE = null;
           if (spotlight) gsap.to(spotlight, { opacity: 0, duration: 0.5, ease: "power2.out" });
           if (quote) gsap.to(quote, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.5)" });
           if (text) gsap.to(text, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.5)" });

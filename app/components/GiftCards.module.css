@@ -1,0 +1,350 @@
+/* ---------- Section ---------- */
+.section {
+  position: relative;
+  z-index: 15;
+  padding: clamp(5rem, 10vh, 8rem) 1.5rem;
+  background: linear-gradient(180deg, #0a0502 0%, #0d0703 50%, #1a0f05 100%);
+  overflow: hidden;
+}
+
+.bgGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  height: 50vh;
+  background: radial-gradient(ellipse at center, rgba(232, 171, 48, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ---------- Container ---------- */
+.container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+.header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vh, 4rem);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(245, 194, 66, 0.6);
+  font-family: var(--font-inter), sans-serif;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #FFD75A;
+  text-shadow: 0 2px 20px rgba(245, 194, 66, 0.15);
+  font-family: var(--font-fraunces), serif;
+  line-height: 1.2;
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.ornamentLine {
+  width: 50px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 171, 48, 0.35), transparent);
+}
+
+.ornamentDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(232, 171, 48, 0.4);
+}
+
+/* ---------- Layout ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+/* ---------- Gift Card Visual ---------- */
+.giftCard {
+  perspective: 1200px;
+}
+
+.giftCardInner {
+  position: relative;
+  aspect-ratio: 1.6 / 1;
+  border-radius: 20px;
+  background:
+    linear-gradient(135deg, #f5c242 0%, #e8ab30 40%, #d4951a 70%, #c4901a 100%);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(232, 171, 48, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transform: rotateY(-6deg) rotateX(4deg);
+  transition: transform 0.5s ease;
+}
+
+.giftCard:hover .giftCardInner {
+  transform: rotateY(0deg) rotateX(0deg);
+}
+
+/* Leather grain texture */
+.giftCardInner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.08) 0%, transparent 8%),
+    radial-gradient(circle at 70% 60%, rgba(0, 0, 0, 0.08) 0%, transparent 10%),
+    radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 7%);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ---------- Card Corners ---------- */
+.cardCorner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.cardCorner::before,
+.cardCorner::after {
+  content: "";
+  position: absolute;
+  background: rgba(15, 8, 5, 0.5);
+}
+
+.cardCorner::before {
+  width: 100%;
+  height: 1px;
+  top: 0;
+  left: 0;
+}
+
+.cardCorner::after {
+  width: 1px;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.cardCornerTL { top: 10px; left: 10px; }
+.cardCornerTR { top: 10px; right: 10px; transform: scaleX(-1); }
+.cardCornerBL { bottom: 10px; left: 10px; transform: scaleY(-1); }
+.cardCornerBR { bottom: 10px; right: 10px; transform: scale(-1, -1); }
+
+/* ---------- Card Content ---------- */
+.giftCardTop {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.giftCardBrand {
+  font-size: 1.4rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #0f0805;
+  font-family: var(--font-fraunces), serif;
+  line-height: 1;
+}
+
+.giftCardSub {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(15, 8, 5, 0.5);
+  font-family: var(--font-inter), sans-serif;
+  margin-top: 4px;
+}
+
+.giftCardMiddle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.giftCardLabel {
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(15, 8, 5, 0.4);
+  font-family: var(--font-inter), sans-serif;
+  margin-bottom: 4px;
+}
+
+.giftCardAmount {
+  font-size: 2rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #0f0805;
+  font-family: var(--font-fraunces), serif;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.giftCardBottom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.giftCardChip {
+  width: 32px;
+  height: 24px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #b88015 0%, #d4951a 50%, #b88015 100%);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.giftCardNote {
+  font-size: 0.65rem;
+  font-style: italic;
+  color: rgba(15, 8, 5, 0.5);
+  font-family: var(--font-fraunces), serif;
+}
+
+/* ---------- Purchase Section ---------- */
+.purchaseSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.purchaseDesc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* ---------- Amount Grid ---------- */
+.amountGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.amountBtn {
+  padding: 14px 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(232, 171, 48, 0.55);
+  background: rgba(232, 171, 48, 0.06);
+  border: 1px solid rgba(232, 171, 48, 0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.amountBtn:hover {
+  color: #f5c242;
+  border-color: rgba(232, 171, 48, 0.3);
+  background: rgba(232, 171, 48, 0.1);
+}
+
+.amountBtnActive {
+  color: #0f0805;
+  background: linear-gradient(135deg, #f5c242 0%, #e8ab30 100%);
+  border-color: #e8ab30;
+  box-shadow: 0 4px 16px rgba(232, 171, 48, 0.25);
+}
+
+/* ---------- Buy Button ---------- */
+.buyBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px 24px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #0f0805;
+  background: linear-gradient(135deg, #f5c242 0%, #e8ab30 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-inter), sans-serif;
+  box-shadow: 0 8px 24px rgba(232, 171, 48, 0.2);
+}
+
+.buyBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(232, 171, 48, 0.3);
+}
+
+.buyBtn svg {
+  transition: transform 0.3s ease;
+}
+
+.buyBtn:hover svg {
+  transform: translateX(4px);
+}
+
+/* ---------- Features ---------- */
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.featureItem svg {
+  color: rgba(232, 171, 48, 0.5);
+  flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .amountGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

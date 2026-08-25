@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,6 +13,51 @@ export default function MenuBook() {
   const sectionRef = useRef<HTMLElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
   const coverRef = useRef<HTMLDivElement>(null);
+  const spineRef = useRef<HTMLDivElement>(null);
+  const bookmarkRef = useRef<HTMLDivElement>(null);
+  const gildedRightRef = useRef<HTMLDivElement>(null);
+  const gildedBottomRef = useRef<HTMLDivElement>(null);
+  const floatingItemsRef = useRef<HTMLDivElement>(null);
+  const menuItemListRef = useRef<HTMLDivElement>(null);
+
+  // Pick one random item per category — stable across renders
+  const floatingDishes = useMemo(() => {
+    // Deterministic pseudo-random based on index so it doesn't reshuffle on re-render
+    return CATEGORIES.map((cat, i) => {
+      const items = MENU_ITEMS.filter((m) => m.category === cat);
+      const pick = items[i % items.length];
+      return pick;
+    }).filter(Boolean);
+  }, []);
+
+  // Pre-computed positions hugging the book edges
+  const floatingPositions = useMemo(() => {
+    const spots = [
+      { top: "15%", left: "18%" },
+      { top: "20%", left: "78%" },
+      { top: "32%", left: "15%" },
+      { top: "40%", left: "82%" },
+      { top: "50%", left: "16%" },
+      { top: "58%", left: "80%" },
+      { top: "68%", left: "18%" },
+      { top: "75%", left: "78%" },
+      { top: "25%", left: "72%" },
+      { top: "35%", left: "22%" },
+      { top: "45%", left: "74%" },
+      { top: "55%", left: "20%" },
+      { top: "62%", left: "76%" },
+      { top: "72%", left: "22%" },
+      { top: "28%", left: "80%" },
+      { top: "42%", left: "18%" },
+      { top: "52%", left: "78%" },
+      { top: "65%", left: "20%" },
+      { top: "78%", left: "75%" },
+      { top: "85%", left: "28%" },
+      { top: "12%", left: "45%" },
+      { top: "88%", left: "48%" },
+    ];
+    return spots;
+  }, []);
   const [activeCategory, setActiveCategory] = useState("OG Dum Biryanis");
   const [showModal, setShowModal] = useState(false);
   const [modalCategory, setModalCategory] = useState("OG Dum Biryanis");
@@ -28,11 +73,14 @@ export default function MenuBook() {
 
   useEffect(() => {
     if (showModal) {
+      document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
     } else {
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     }
     return () => {
+      document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
     };
   }, [showModal]);
@@ -45,12 +93,43 @@ export default function MenuBook() {
       const section = sectionRef.current;
       const book = bookRef.current;
       const cover = coverRef.current;
+      const spine = spineRef.current;
+      const bookmark = bookmarkRef.current;
+      const gildedRight = gildedRightRef.current;
+      const gildedBottom = gildedBottomRef.current;
+      const floatingContainer = floatingItemsRef.current;
       if (!section || !book || !cover) return;
 
       // Closed book occupies the right half of the container,
       // so shift the whole book left so the closed cover is screen-centered.
       gsap.set(book, { xPercent: -25, rotateX: 8, scale: 0.94, transformOrigin: "center center" });
       gsap.set(cover, { rotateY: 0, transformOrigin: "left center" });
+
+      // Decorations hidden until the cover starts opening
+      gsap.set([spine, bookmark, gildedRight, gildedBottom], { autoAlpha: 0 });
+
+      // Floating dish names — visible from the start, will fly into the book
+      const floatingEls = floatingContainer
+        ? Array.from(floatingContainer.querySelectorAll("[data-float-item]")) as HTMLElement[]
+        : [];
+
+      // Calculate each item's distance to the menu item list on the right page
+      const itemList = menuItemListRef.current;
+      const targetRect = itemList
+        ? itemList.getBoundingClientRect()
+        : book.getBoundingClientRect();
+      const targetX = targetRect.left + targetRect.width / 2;
+      const targetY = targetRect.top + targetRect.height * 0.3;
+
+      floatingEls.forEach((el) => {
+        const elRect = el.getBoundingClientRect();
+        const elCenterX = elRect.left + elRect.width / 2;
+        const elCenterY = elRect.top + elRect.height / 2;
+        el.dataset.dx = String(targetX - elCenterX);
+        el.dataset.dy = String(targetY - elCenterY);
+      });
+
+      gsap.set(floatingEls, { autoAlpha: 1, scale: 1 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -70,7 +149,31 @@ export default function MenuBook() {
         .to(cover, { z: 60, duration: 25, ease: "power1.out" }, 0)
         .to(cover, { z: 0, duration: 25, ease: "power1.in" }, 25)
         // Book slides right so the open spread stays centered
-        .to(book, { xPercent: 0, duration: 50, ease: "power2.inOut" }, 0);
+        .to(book, { xPercent: 0, duration: 50, ease: "power2.inOut" }, 0)
+        // Spine fades in as the cover begins to lift
+        .to(spine, { autoAlpha: 1, duration: 8, ease: "power2.out" }, 5)
+        // Gilded edges + bookmark fade in as the cover passes the halfway point
+        .to([gildedRight, gildedBottom], { autoAlpha: 1, duration: 10, ease: "power2.out" }, 20)
+        .to(bookmark, { autoAlpha: 1, duration: 8, ease: "power2.out" }, 25);
+
+      // Floating dish names — separate non-scrubbed timeline for smooth animation
+      // Triggers when the book starts opening, plays independently of scroll
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          toggleActions: "play none none reverse",
+        },
+      })
+        .to(floatingEls, {
+          autoAlpha: 0,
+          scale: 0.3,
+          x: (_i: number, el: HTMLElement) => parseFloat(el.dataset.dx || "0"),
+          y: (_i: number, el: HTMLElement) => parseFloat(el.dataset.dy || "0"),
+          duration: 0.4,
+          ease: "power2.in",
+          stagger: 0.08,
+        });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -132,7 +235,44 @@ export default function MenuBook() {
       {/* ==================== Desktop Book Animation ==================== */}
       <div className="hidden md:block h-[250vh]">
       <div className="sticky top-0 h-screen flex items-center justify-center">
+        {/* Floating dish names around the book */}
+        <div ref={floatingItemsRef} className={styles.floatingItems}>
+          {floatingDishes.map((dish, i) => (
+            <span
+              key={i}
+              data-float-item
+              className={styles.floatingItem}
+              style={{
+                top: floatingPositions[i % floatingPositions.length].top,
+                left: floatingPositions[i % floatingPositions.length].left,
+              }}
+            >
+              <span
+                className={styles.floatingItemInner}
+                style={{
+                  animationDelay: `${(i % 6) * 0.4}s`,
+                }}
+              >
+                {dish.name}
+              </span>
+            </span>
+          ))}
+        </div>
+
         <div ref={bookRef} className={styles.book}>
+          {/* Decorative spine — gold ornamental binding on the left edge */}
+          <div ref={spineRef} className={styles.spine}>
+            <div className={styles.spineRidge} />
+            <div className={styles.spineRidge} />
+            <div className={styles.spineRidge} />
+            <div className={styles.spineCrest} />
+          </div>
+
+          {/* Gilded page edges — gold leaf on the right side */}
+          <div ref={gildedRightRef} className={styles.gildedEdgeRight} />
+          {/* Gilded page edges — gold leaf on the bottom */}
+          <div ref={gildedBottomRef} className={styles.gildedEdgeBottom} />
+
           {/* Right page — menu content (revealed under the cover) */}
           <div className={styles.pageRight}>
             <h2 className={styles.menuTitle}>Our Menu</h2>
@@ -185,7 +325,7 @@ export default function MenuBook() {
             </div>
 
             {/* Filtered menu items */}
-            <div className={styles.menuItemList}>
+            <div ref={menuItemListRef} className={styles.menuItemList}>
               {filteredItems.map((item, i) => (
                 <div key={i} className={styles.menuItemRow}>
                   <div className={styles.menuItemInfo}>
@@ -205,16 +345,38 @@ export default function MenuBook() {
             </button>
           </div>
 
+          {/* Bookmark ribbon — hanging from between the pages */}
+          <div ref={bookmarkRef} className={styles.bookmark}>
+            <div className={styles.bookmarkTail} />
+          </div>
+
           {/* Cover — starts closed over the right page, flips to the left */}
           <div ref={coverRef} className={styles.cover}>
             {/* Front of cover (visible when closed) */}
             <div className={styles.coverFront}>
+              {/* Corner ornaments — Mughal arabesque flourishes */}
+              <div className={`${styles.cornerOrnament} ${styles.cornerTopLeft}`} />
+              <div className={`${styles.cornerOrnament} ${styles.cornerTopRight}`} />
+              <div className={`${styles.cornerOrnament} ${styles.cornerBottomLeft}`} />
+              <div className={`${styles.cornerOrnament} ${styles.cornerBottomRight}`} />
+
+              {/* Decorative border frame */}
+              <div className={styles.coverBorder} />
+
               <div className={styles.coverOrnament} />
               <h1 className={styles.coverTitle}>Mr Biryani</h1>
               <p className={styles.coverSubtitle}>Royal Kitchen</p>
               <div className={styles.coverDivider} />
               <p className={styles.coverTagline}>A Collection of</p>
               <p className={styles.coverTaglineBold}>Signature Recipes</p>
+
+              {/* Embossed wax seal */}
+              <div className={styles.waxSeal}>
+                <div className={styles.waxSealInner}>
+                  <span className={styles.waxSealText}>MB</span>
+                </div>
+              </div>
+
               <div className={styles.coverOrnament} />
             </div>
             {/* Back of cover (becomes the left page when open) */}
@@ -238,7 +400,7 @@ export default function MenuBook() {
 
       {/* ==================== Full Screen Menu Modal ==================== */}
       {showModal && (
-        <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
+        <div className={styles.modalOverlay} onClick={() => setShowModal(false)} onWheel={(e) => e.stopPropagation()} onTouchMove={(e) => e.stopPropagation()}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             {/* Close button */}
             <button

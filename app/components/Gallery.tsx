@@ -8,12 +8,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const GALLERY_IMAGES = [
-  { src: "/imgs/hero-plate/plate1.png", alt: "Royal Chicken Biryani", span: "large" },
-  { src: "/imgs/chicken%20%20biryani.jpg", alt: "Chicken Biryani", span: "medium" },
-  { src: "/imgs/hero-plate/plate2.png", alt: "Mutton Shahi Biryani", span: "small" },
-  { src: "/imgs/hero-plate/plate3.png", alt: "Veg Dum Biryani", span: "small" },
-  { src: "/imgs/hero-plate/plate4.png", alt: "Prawn Masala Biryani", span: "medium" },
-  { src: "/imgs/ingredients/ing1.png", alt: "Fresh Ingredients", span: "small" },
+  { src: "/imgs/gallery/1.webp", alt: "Signature Biryani", span: "large" },
+  { src: "/imgs/gallery/2.webp", alt: "Royal Spread", span: "small" },
+  { src: "/imgs/gallery/3.webp", alt: "Fresh Spices", span: "small" },
+  { src: "/imgs/gallery/4.webp", alt: "Slow Cooked", span: "small" },
+  { src: "/imgs/gallery/5.webp", alt: "Golden Rice", span: "small" },
+  { src: "/imgs/gallery/6.webp", alt: "Handi Special", span: "small" },
+  { src: "/imgs/gallery/7.webp", alt: "Mughlai Feast", span: "small" },
+  { src: "/imgs/gallery/8.webp", alt: "Saffron Layers", span: "large" },
+  { src: "/imgs/gallery/9.webp", alt: "Tender Meat", span: "small" },
+  { src: "/imgs/gallery/10.webp", alt: "Plated Perfect", span: "small" },
 ];
 
 export default function Gallery() {
@@ -59,7 +63,7 @@ export default function Gallery() {
         });
       }
 
-      gsap.set([labelRef.current], { y: 30, opacity: 0, filter: "blur(8px)" });
+      gsap.set([labelRef.current], { y: 30, opacity: 0 });
       gsap.set(letterEls, { y: 80, opacity: 0, rotateX: -90, rotateZ: -10 });
       gsap.set(ornamentRef.current, { scaleX: 0, opacity: 0 });
 
@@ -74,7 +78,6 @@ export default function Gallery() {
           rotateY: fromLeft ? (isMobile ? -20 : -75) : (isMobile ? 20 : 75),
           rotateX: isMobile ? 8 : 25,
           transformOrigin: "center center",
-          filter: isMobile ? "blur(6px)" : "blur(16px)",
         });
       });
 
@@ -82,12 +85,11 @@ export default function Gallery() {
         scrollTrigger: {
           trigger: section,
           start: "top 75%",
-          end: "bottom 70%",
-          scrub: 4,
+          toggleActions: "play none none none",
         },
       });
 
-      tl.to(labelRef.current, { y: 0, opacity: 1, filter: "blur(0px)", ease: "expo.out", duration: 1 }, 0)
+      tl.to(labelRef.current, { y: 0, opacity: 1, ease: "expo.out", duration: 1 }, 0)
         .to(letterEls, {
           y: 0,
           opacity: 1,
@@ -106,22 +108,27 @@ export default function Gallery() {
           scale: 1,
           rotateY: 0,
           rotateX: 0,
-          filter: "blur(0px)",
           ease: "expo.out",
           duration: 2,
           stagger: 0.25,
         }, 0.3);
 
-      // Parallax depth hover on each gallery item (desktop only)
+      // Parallax depth hover on each gallery item (desktop only).
+      // overwrite:"auto" lets hover coexist with the entrance timeline —
+      // GSAP resolves conflicts on shared properties automatically.
       if (!isMobile) {
       imageEls.forEach((el) => {
         const item = el as HTMLElement;
         const img = item.querySelector(".galleryImg");
         const overlay = item.querySelector(".galleryOverlay");
-        const caption = item.querySelector(".galleryCaption");
-        const captionText = item.querySelector(".galleryCaptionText");
 
-        item.addEventListener("mousemove", (e: MouseEvent) => {
+        let rafId: number | null = null;
+        let lastE: MouseEvent | null = null;
+
+        const flush = () => {
+          rafId = null;
+          const e = lastE;
+          if (!e) return;
           const rect = item.getBoundingClientRect();
           const x = (e.clientX - rect.left) / rect.width - 0.5;
           const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -131,23 +138,31 @@ export default function Gallery() {
             rotateX: y * -8,
             duration: 0.4,
             ease: "power2.out",
+            overwrite: "auto",
           });
-          if (img) gsap.to(img, { scale: 1.12, x: x * 12, y: y * 12, duration: 0.5, ease: "power3.out" });
-          if (overlay) gsap.to(overlay, { opacity: 1, duration: 0.3 });
-          if (caption) gsap.to(caption, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" });
-          if (captionText) gsap.to(captionText, { x: x * 6, y: y * 4, duration: 0.4, ease: "power3.out" });
-        });
+          if (img) gsap.to(img, { scale: 1.12, x: x * 12, y: y * 12, duration: 0.5, ease: "power3.out", overwrite: "auto" });
+          if (overlay) gsap.to(overlay, { opacity: 1, duration: 0.3, overwrite: "auto" });
+        };
+
+        const onMove = (e: MouseEvent) => {
+          lastE = e;
+          if (rafId === null) rafId = requestAnimationFrame(flush);
+        };
+
+        item.addEventListener("mousemove", onMove);
 
         item.addEventListener("mouseleave", () => {
+          if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+          lastE = null;
           gsap.to(item, {
             rotateY: 0,
             rotateX: 0,
             duration: 0.7,
             ease: "elastic.out(1, 0.5)",
+            overwrite: "auto",
           });
-          if (img) gsap.to(img, { scale: 1, x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.5)" });
-          if (overlay) gsap.to(overlay, { opacity: 0, duration: 0.4 });
-          if (caption) gsap.to(caption, { y: 16, opacity: 0, duration: 0.4 });
+          if (img) gsap.to(img, { scale: 1, x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.5)", overwrite: "auto" });
+          if (overlay) gsap.to(overlay, { opacity: 0, duration: 0.4, overwrite: "auto" });
         });
       });
       }
@@ -247,32 +262,6 @@ export default function Gallery() {
                   background: "linear-gradient(to top, rgba(10,5,3,0.85) 0%, rgba(10,5,3,0.2) 40%, transparent 70%)",
                 }}
               />
-              <div
-                className="galleryCaption absolute bottom-0 left-0 right-0 p-5 pointer-events-none"
-                style={{ opacity: 0, transform: "translateY(16px)" }}
-              >
-                <div
-                  className="inline-block"
-                  style={{
-                    padding: "4px 12px",
-                    borderRadius: "6px",
-                    background: "rgba(245,194,66,0.1)",
-                    border: "1px solid rgba(245,194,66,0.2)",
-                    backdropFilter: "blur(8px)",
-                  }}
-                >
-                  <span
-                    className="galleryCaptionText text-sm font-bold italic"
-                    style={{
-                      fontFamily: "var(--font-fraunces), serif",
-                      color: "#f5c242",
-                      textShadow: "0 1px 4px rgba(245,194,66,0.15)",
-                    }}
-                  >
-                    {img.alt}
-                  </span>
-                </div>
-              </div>
             </div>
           ))}
         </div>

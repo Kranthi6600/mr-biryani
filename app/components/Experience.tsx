@@ -38,7 +38,7 @@ export default function Experience() {
 
       gsap.set(titleWordEls, { y: "100%", opacity: 0, rotateX: isMobile ? -45 : -90 });
       gsap.set(bodyWordEls, { y: 20, opacity: 0 });
-      gsap.set([subtitleRef.current, buttonRef.current], { y: isMobile ? 30 : 60, opacity: 0, scale: isMobile ? 0.96 : 0.92, filter: isMobile ? "blur(6px)" : "blur(12px)" });
+      gsap.set([subtitleRef.current, buttonRef.current], { y: isMobile ? 30 : 60, opacity: 0, scale: isMobile ? 0.96 : 0.92 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -57,7 +57,7 @@ export default function Experience() {
         duration: 1,
         stagger: 0.15,
       }, 0)
-        .to(subtitleRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "expo.out", duration: 1.2 }, 0.5)
+        .to(subtitleRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0.5)
         .to(bodyWordEls, {
           y: 0,
           opacity: 1,
@@ -65,7 +65,7 @@ export default function Experience() {
           duration: 0.6,
           stagger: 0.04,
         }, 0.7)
-        .to(buttonRef.current, { y: 0, opacity: 1, scale: 1, filter: "blur(0px)", ease: "back.out(1.4)", duration: 1.2 }, 1.2);
+        .to(buttonRef.current, { y: 0, opacity: 1, scale: 1, ease: "back.out(1.4)", duration: 1.2 }, 1.2);
 
       // Floating spice particles
       if (particlesRef.current) {
@@ -132,13 +132,26 @@ export default function Experience() {
       // Magnetic button effect (desktop only)
       if (buttonRef.current && !isMobile) {
         const btn = buttonRef.current;
-        btn.addEventListener("mousemove", (e: MouseEvent) => {
+        let rafId: number | null = null;
+        let lastE: MouseEvent | null = null;
+
+        const flush = () => {
+          rafId = null;
+          const e = lastE;
+          if (!e) return;
           const rect = btn.getBoundingClientRect();
           const x = (e.clientX - rect.left) / rect.width - 0.5;
           const y = (e.clientY - rect.top) / rect.height - 0.5;
           gsap.to(btn, { x: x * 20, y: y * 12, duration: 0.4, ease: "power3.out" });
+        };
+
+        btn.addEventListener("mousemove", (e: MouseEvent) => {
+          lastE = e;
+          if (rafId === null) rafId = requestAnimationFrame(flush);
         });
         btn.addEventListener("mouseleave", () => {
+          if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+          lastE = null;
           gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.4)" });
         });
       }

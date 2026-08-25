@@ -7,17 +7,10 @@ const TABLE_ROTATION = 43;
 
 const STEAM_PUFFS = [
   { delay: 0.0, duration: 3.6, drift: -10, size: 52, left: 20, top: 35 },
-  { delay: 0.4, duration: 4.0, drift: 14, size: 44, left: 75, top: 30 },
   { delay: 0.8, duration: 3.4, drift: -6, size: 56, left: 38, top: 50 },
-  { delay: 1.2, duration: 3.8, drift: 18, size: 40, left: 62, top: 45 },
   { delay: 1.6, duration: 3.5, drift: -14, size: 48, left: 15, top: 55 },
-  { delay: 2.0, duration: 4.2, drift: 8, size: 54, left: 82, top: 48 },
   { delay: 2.4, duration: 3.3, drift: -3, size: 42, left: 50, top: 38 },
-  { delay: 2.8, duration: 3.9, drift: 16, size: 50, left: 28, top: 42 },
   { delay: 3.2, duration: 3.6, drift: -12, size: 46, left: 68, top: 52 },
-  { delay: 3.6, duration: 4.1, drift: 5, size: 58, left: 45, top: 60 },
-  { delay: 4.0, duration: 3.5, drift: -8, size: 44, left: 88, top: 38 },
-  { delay: 4.4, duration: 3.8, drift: 12, size: 50, left: 10, top: 45 },
 ];
 
 function Steam({ counterRotation }: { counterRotation: number }) {

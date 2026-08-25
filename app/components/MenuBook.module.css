@@ -1,3 +1,35 @@
+/* ==================== Floating Dish Names ==================== */
+.floatingItems {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floatingItem {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
+}
+
+.floatingItemInner {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-style: italic;
+  font-family: var(--font-fraunces), serif;
+  color: rgba(232, 171, 48, 0.65);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  text-shadow: 0 0 12px rgba(232, 171, 48, 0.25);
+  animation: floatBob 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatBob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
 /* ==================== Book ==================== */
 .book {
   position: relative;
@@ -8,6 +40,250 @@
   perspective: 2400px;
   transform-style: preserve-3d;
   will-change: transform;
+}
+
+/* ==================== Decorative Spine ==================== */
+.spine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 14px;
+  margin-left: -7px;
+  background: linear-gradient(90deg,
+    #1a0f05 0%,
+    #2a1a08 30%,
+    #3a2410 50%,
+    #2a1a08 70%,
+    #1a0f05 100%
+  );
+  border-radius: 4px;
+  box-shadow:
+    inset 2px 0 4px rgba(0, 0, 0, 0.6),
+    inset -1px 0 0 rgba(232, 171, 48, 0.12),
+    2px 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.spineRidge {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(232, 171, 48, 0.3),
+    rgba(245, 194, 66, 0.5),
+    rgba(232, 171, 48, 0.3),
+    transparent
+  );
+  border-radius: 1px;
+}
+
+.spineRidge:nth-child(1) { top: 15%; }
+.spineRidge:nth-child(2) { top: 50%; }
+.spineRidge:nth-child(3) { top: 85%; }
+
+.spineCrest {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(232, 171, 48, 0.4);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 194, 66, 0.2) 0%, transparent 70%);
+}
+
+/* ==================== Gilded Page Edges ==================== */
+.gildedEdgeRight {
+  position: absolute;
+  right: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 4px;
+  background: linear-gradient(180deg,
+    #d4951a 0%,
+    #f5c242 20%,
+    #e8ab30 50%,
+    #f5c242 80%,
+    #d4951a 100%
+  );
+  border-radius: 0 2px 2px 0;
+  box-shadow:
+    0 0 8px rgba(232, 171, 48, 0.3),
+    inset 0 0 2px rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
+
+.gildedEdgeBottom {
+  position: absolute;
+  left: 50%;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg,
+    #d4951a 0%,
+    #f5c242 20%,
+    #e8ab30 50%,
+    #f5c242 80%,
+    #d4951a 100%
+  );
+  border-radius: 0 0 2px 2px;
+  box-shadow:
+    0 0 8px rgba(232, 171, 48, 0.2),
+    inset 0 0 2px rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+/* ==================== Bookmark Ribbon ==================== */
+.bookmark {
+  position: absolute;
+  right: 90px;
+  top: -2px;
+  width: 14px;
+  height: 80px;
+  background: linear-gradient(180deg,
+    #c24914 0%,
+    #a83a10 40%,
+    #8a2e0a 100%
+  );
+  z-index: 20;
+  box-shadow:
+    1px 0 3px rgba(0, 0, 0, 0.3),
+    inset 1px 0 0 rgba(255, 255, 255, 0.1);
+  border-radius: 2px 2px 0 0;
+  pointer-events: none;
+}
+
+.bookmarkTail {
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #8a2e0a;
+}
+
+/* ==================== Corner Ornaments ==================== */
+.cornerOrnament {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.cornerOrnament::before,
+.cornerOrnament::after {
+  content: "";
+  position: absolute;
+  background: rgba(15, 8, 5, 0.4);
+}
+
+.cornerOrnament::before {
+  width: 100%;
+  height: 1.5px;
+  top: 0;
+  left: 0;
+}
+
+.cornerOrnament::after {
+  width: 1.5px;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.cornerTopLeft {
+  top: 16px;
+  left: 16px;
+}
+
+.cornerTopRight {
+  top: 16px;
+  right: 16px;
+  transform: scaleX(-1);
+}
+
+.cornerBottomLeft {
+  bottom: 16px;
+  left: 16px;
+  transform: scaleY(-1);
+}
+
+.cornerBottomRight {
+  bottom: 16px;
+  right: 16px;
+  transform: scale(-1, -1);
+}
+
+/* Inner flourish dot on each corner */
+.cornerOrnament::before {
+  border-radius: 0 0 4px 0;
+  background: linear-gradient(135deg, rgba(15, 8, 5, 0.5), rgba(15, 8, 5, 0.2));
+}
+
+/* ==================== Cover Border Frame ==================== */
+.coverBorder {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(15, 8, 5, 0.25);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.coverBorder::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgba(15, 8, 5, 0.12);
+  border-radius: 4px;
+}
+
+/* ==================== Embossed Wax Seal ==================== */
+.waxSeal {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    #c24914 0%,
+    #a83a10 50%,
+    #7a2808 100%
+  );
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.15),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waxSealInner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.waxSealText {
+  font-size: 0.7rem;
+  font-weight: 900;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-fraunces), serif;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
 }
 
 /* ==================== Right Page (menu) ==================== */
@@ -41,6 +317,22 @@
 .pageRight {
   scrollbar-width: thin;
   scrollbar-color: rgba(232, 171, 48, 0.25) transparent;
+}
+
+/* Subtle paper texture on the right page */
+.pageRight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 27px,
+    rgba(232, 171, 48, 0.015) 27px,
+    rgba(232, 171, 48, 0.015) 28px
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* ==================== Cover ==================== */
@@ -196,13 +488,21 @@
   border-bottom: 1px solid rgba(232, 171, 48, 0.18);
   padding-bottom: 12px;
   margin-bottom: 16px;
+  position: relative;
+  z-index: 1;
 }
 
 /* ==================== Category Dropdown ==================== */
 .dropdownWrap {
   position: relative;
   margin-bottom: 20px;
-  z-index: 50;
+  z-index: 5;
+}
+
+.menuItemList,
+.viewAllBtn {
+  position: relative;
+  z-index: 1;
 }
 
 .dropdownHeader {
@@ -274,7 +574,7 @@
   padding: 6px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(232, 171, 48, 0.05);
   animation: dropdownSlide 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 60;
+  z-index: 6;
 }
 
 @keyframes dropdownSlide {

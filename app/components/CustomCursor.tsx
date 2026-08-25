@@ -1,17 +1,17 @@
 "use client";
 
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import styles from "./CustomCursor.module.css";
 
-const TRAIL_COUNT = 12;
+const TRAIL_COUNT = 4;
 
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const trailRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const dot = dotRef.current;
     const ring = ringRef.current;
     const trails = trailRefs.current.filter(Boolean) as HTMLDivElement[];
@@ -33,13 +33,26 @@ export default function CustomCursor() {
       gsap.quickTo(t, "y", { duration: 0.3 + i * 0.04, ease: "power2.out" })
     );
 
+    let pendingX = 0;
+    let pendingY = 0;
+    let rafId: number | null = null;
+
+    const flush = () => {
+      rafId = null;
+      xTo(pendingX);
+      yTo(pendingY);
+      ringXTo(pendingX);
+      ringYTo(pendingY);
+      trailX.forEach((fn) => fn(pendingX));
+      trailY.forEach((fn) => fn(pendingY));
+    };
+
     const onMove = (e: MouseEvent) => {
-      xTo(e.clientX);
-      yTo(e.clientY);
-      ringXTo(e.clientX);
-      ringYTo(e.clientY);
-      trailX.forEach((fn) => fn(e.clientX));
-      trailY.forEach((fn) => fn(e.clientY));
+      pendingX = e.clientX;
+      pendingY = e.clientY;
+      if (rafId === null) {
+        rafId = requestAnimationFrame(flush);
+      }
     };
 
     const onDown = () => {
@@ -79,6 +92,7 @@ export default function CustomCursor() {
       window.removeEventListener("mouseup", onUp);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, []);
 
