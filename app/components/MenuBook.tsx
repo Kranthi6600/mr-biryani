@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState, useMemo } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -354,30 +355,23 @@ export default function MenuBook() {
           <div ref={coverRef} className={styles.cover}>
             {/* Front of cover (visible when closed) */}
             <div className={styles.coverFront}>
-              {/* Corner ornaments — Mughal arabesque flourishes */}
-              <div className={`${styles.cornerOrnament} ${styles.cornerTopLeft}`} />
-              <div className={`${styles.cornerOrnament} ${styles.cornerTopRight}`} />
-              <div className={`${styles.cornerOrnament} ${styles.cornerBottomLeft}`} />
-              <div className={`${styles.cornerOrnament} ${styles.cornerBottomRight}`} />
-
-              {/* Decorative border frame */}
-              <div className={styles.coverBorder} />
-
-              <div className={styles.coverOrnament} />
-              <h1 className={styles.coverTitle}>Mr Biryani</h1>
-              <p className={styles.coverSubtitle}>Royal Kitchen</p>
-              <div className={styles.coverDivider} />
-              <p className={styles.coverTagline}>A Collection of</p>
-              <p className={styles.coverTaglineBold}>Signature Recipes</p>
-
-              {/* Embossed wax seal */}
-              <div className={styles.waxSeal}>
-                <div className={styles.waxSealInner}>
-                  <span className={styles.waxSealText}>MB</span>
-                </div>
-              </div>
-
-              <div className={styles.coverOrnament} />
+              <Image
+                src="/imgs/gallery/menu-cover.png"
+                alt="Mr Biryani — Royal Kitchen Menu Cover"
+                fill
+                sizes="440px"
+                className={styles.coverImage}
+                priority
+              />
+              <Image
+                src="/imgs/gallery/mrbiryani_logo_.png"
+                alt="Mr Biryani logo"
+                width={500}
+                height={321}
+                sizes="240px"
+                className={styles.coverLogo}
+                priority
+              />
             </div>
             {/* Back of cover (becomes the left page when open) */}
             <div className={styles.coverBack}>

@@ -149,17 +149,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Spacer to enable scrolling past the fixed hero */}
-      <div className="h-screen w-full" aria-hidden="true" style={{ background: "linear-gradient(135deg, #E8AB30 0%, #D4951A 40%, #B88015 100%)" }} />
+      {/* ==================== 1st SECTION: Kitchen to Plate ==================== */}
+      <CookingProcess />
 
-      {/* ==================== SCROLLABLE SECTIONS ==================== */}
+      {/* ==================== 2nd SECTION: Menu Book ==================== */}
       <MenuBook />
 
       <About />
 
       <Experience />
-
-      <CookingProcess />
 
       <StatsCounter />
 

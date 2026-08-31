@@ -362,26 +362,26 @@
   text-align: center;
 }
 
-/* Front — golden leather cover */
+/* Front — menu cover image */
 .coverFront {
-  background:
-    linear-gradient(145deg, #f5c242 0%, #e8ab30 55%, #d4951a 100%);
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 0 10px 10px 0;
   overflow: hidden;
 }
 
-/* Subtle leather grain on the cover */
-.coverFront::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.08) 0%, transparent 8%),
-    radial-gradient(circle at 70% 60%, rgba(0, 0, 0, 0.08) 0%, transparent 10%),
-    radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 7%);
-  opacity: 0.6;
-  pointer-events: none;
+.coverImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Logo centered on top of the cover image */
+.coverLogo {
+  position: relative;
+  z-index: 2;
+  width: 62%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
 }
 
 /* Back — inside page shown on the left when open */
