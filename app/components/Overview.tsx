@@ -7,13 +7,22 @@ import { dishes } from "./useDishSync";
 function useTypingEffect(text: string, speed = 20) {
   const [displayed, setDisplayed] = useState("");
   const [done, setDone] = useState(false);
+  const [prevText, setPrevText] = useState(text);
   const indexRef = useRef(0);
 
-  useEffect(() => {
+  // Reset typing state when `text` changes. Calling setState during render
+  // (guarded by a prev-value check) is the React-recommended way to adjust
+  // state in response to a prop change — React re-renders immediately without
+  // committing, avoiding the cascading renders that setState inside an effect
+  // would cause. See https://react.dev/learn/you-might-not-need-an-effect
+  if (text !== prevText) {
+    setPrevText(text);
     setDisplayed("");
     setDone(false);
     indexRef.current = 0;
+  }
 
+  useEffect(() => {
     const interval = setInterval(() => {
       if (indexRef.current < text.length) {
         setDisplayed(text.slice(0, indexRef.current + 1));
@@ -115,7 +124,7 @@ export default function Overview({
       ref={cardRef}
       className="w-full h-full rounded-[2rem] overflow-hidden transition-shadow duration-700 ease-out hover:shadow-[0_12px_48px_rgba(0,0,0,0.6)]"
       style={{
-        background: "rgba(0, 0, 0, 0.96)",
+        background: "rgba(0, 0, 0, 0)",
         border: "1px solid rgba(245, 194, 66, 0.12)",
         transform: "perspective(1200px) rotateY(-12deg)",
         transformStyle: "preserve-3d",
@@ -149,7 +158,7 @@ export default function Overview({
       />
 
       {/* Content */}
-      <div ref={contentRef} className="relative z-10 flex flex-col h-full p-8" style={{ transform: "translateZ(40px)", transformStyle: "preserve-3d" }}>
+      <div ref={contentRef} className="relative z-10 flex flex-col h-full p-8" style={{ transform: "translateZ(40px)", transformStyle: "preserve-3d", marginTop: "120px" }}>
         <div className="h-px bg-gradient-to-r from-[rgba(255,215,90,0.5)] to-transparent" />
 
         {/* Tabs */}
