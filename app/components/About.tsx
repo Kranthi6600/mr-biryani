@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useMemo } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./About.module.css";
@@ -18,6 +19,7 @@ export default function About() {
   const headerRef = useRef<HTMLDivElement>(null);
   const ornamentRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
+  const storyRef = useRef<HTMLDivElement>(null);
   const taglineRef = useRef<HTMLDivElement>(null);
   const promiseRef = useRef<HTMLParagraphElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
@@ -75,6 +77,7 @@ export default function About() {
         headerRef.current,
         ornamentRef.current,
         bodyRef.current,
+        storyRef.current,
         taglineRef.current,
         promiseRef.current,
         flourishRef.current,
@@ -100,6 +103,7 @@ export default function About() {
         .to(headerRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0)
         .to(ornamentRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0.25)
         .to(bodyRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0.5)
+        .to(storyRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0.65)
         .to(taglineRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 0.8)
         .to(promiseRef.current, { y: 0, opacity: 1, scale: 1, ease: "expo.out", duration: 1.2 }, 1.0)
         .to(testimonialEls, { y: 0, opacity: 1, scale: 1, ease: "back.out(1.2)", duration: 1.2, stagger: 0.3 }, 1.3)
@@ -203,6 +207,43 @@ export default function About() {
           From royal kitchens to street-side spice trails, we bring India&rsquo;s
           culinary soul to your plate.
         </p>
+
+        {/* Story block */}
+        <div ref={storyRef} className={styles.storyGrid}>
+          <div className={styles.storyImageWrap}>
+            <Image
+              src="/imgs/mr-biryani-tradition.jpg"
+              alt="Mr. Biryani tradition"
+              fill
+              sizes="(max-width: 768px) 100vw, 45vw"
+              className={styles.storyImage}
+            />
+          </div>
+          <div className={styles.storyText}>
+            <h3 className={styles.storyHeading}>Crafted with Heart. Served with Soul.</h3>
+            <p className={styles.storyPara}>
+              At Mr. Biryani, we don&rsquo;t just cook&mdash;we celebrate. Every dish we
+              serve is a tribute to the kitchens we grew up in, the festivals we danced
+              through, and the stories that simmered over slow flames. From the first
+              crackle of curry leaves in hot oil to the last spoonful of saffron rice,
+              our food is made to stir something deeper than hunger.
+            </p>
+            <p className={styles.storyPara}>
+              We believe in real ingredients, bold spices, and no shortcuts. No
+              preservatives. No compromises. Just the kind of food that makes you close
+              your eyes after the first bite and say, &ldquo;This tastes like home.&rdquo;
+            </p>
+            <p className={styles.storyPara}>
+              Whether you&rsquo;re craving the fiery kick of Andhra chicken, the royal
+              richness of Mughlai curries, or the comfort of a warm dosa on a rainy
+              morning&mdash;Mr. Biryani is your table, your memory, your moment.
+            </p>
+            <p className={styles.storyPara}>
+              So come hungry. Come curious. Come as you are. Because here, every plate
+              is a warm welcome&mdash;and every meal is a reason to smile.
+            </p>
+          </div>
+        </div>
 
         {/* Tagline */}
         <div ref={taglineRef} className={styles.taglineRow}>

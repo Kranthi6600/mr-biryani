@@ -2,7 +2,7 @@
 .section {
   position: relative;
   z-index: 15;
-  padding: clamp(5rem, 10vh, 8rem) 1.5rem;
+  padding: clamp(8rem, 18vh, 14rem) 1.5rem;
   background: linear-gradient(180deg, #0a0502 0%, #0d0703 50%, #1a0f05 100%);
   overflow: hidden;
 }
@@ -52,6 +52,15 @@
   line-height: 1.2;
 }
 
+.subtitle {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-inter), sans-serif;
+  max-width: 560px;
+  margin: 1rem auto 0;
+}
+
 .ornament {
   display: flex;
   align-items: center;
@@ -98,7 +107,7 @@
 .mapWrap {
   position: relative;
   width: 100%;
-  height: 180px;
+  height: 320px;
   overflow: hidden;
 }
 

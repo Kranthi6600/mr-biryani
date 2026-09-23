@@ -1,0 +1,299 @@
+/* ---------- Section ---------- */
+.section {
+  position: relative;
+  z-index: 15;
+  padding: clamp(5rem, 10vh, 8rem) 2rem;
+  background: linear-gradient(180deg, #0a0502 0%, #1a0f05 50%, #0d0703 100%);
+  overflow: hidden;
+}
+
+.bgGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  height: 50vh;
+  background: radial-gradient(ellipse at center, rgba(245, 194, 66, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ---------- Container ---------- */
+.container {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+.header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vh, 4rem);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: rgba(245, 194, 66, 0.6);
+  font-family: var(--font-inter), sans-serif;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  font-style: italic;
+  color: #FFD75A;
+  text-shadow: 0 2px 20px rgba(245, 194, 66, 0.15);
+  font-family: var(--font-cormorant), serif;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-inter), sans-serif;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ---------- Layout ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Info Column ---------- */
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.infoBlock {
+  background: linear-gradient(135deg, rgba(245, 194, 66, 0.04) 0%, rgba(245, 194, 66, 0.01) 100%);
+  border: 1px solid rgba(245, 194, 66, 0.1);
+  border-radius: 16px;
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+
+.infoTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FFD75A;
+  font-family: var(--font-cormorant), serif;
+  font-style: italic;
+  margin-bottom: 0.75rem;
+}
+
+.infoText {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* ---------- Contact Row ---------- */
+.contactRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(245, 194, 66, 0.08);
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.contactLabel {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(245, 194, 66, 0.4);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.contactValue {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: var(--font-inter), sans-serif;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contactValue:hover {
+  color: #FFD75A;
+}
+
+.contactDivider {
+  width: 1px;
+  height: 28px;
+  background: rgba(245, 194, 66, 0.1);
+}
+
+/* ---------- Form Card ---------- */
+.formCard {
+  background: linear-gradient(135deg, rgba(245, 194, 66, 0.04) 0%, rgba(245, 194, 66, 0.01) 100%);
+  border: 1px solid rgba(245, 194, 66, 0.1);
+  border-radius: 16px;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.formTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #FFD75A;
+  font-family: var(--font-cormorant), serif;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Form ---------- */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.nameRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(245, 194, 66, 0.5);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.input,
+.textarea {
+  background: rgba(10, 5, 3, 0.6);
+  border: 1px solid rgba(245, 194, 66, 0.12);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-inter), sans-serif;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  width: 100%;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: rgba(245, 194, 66, 0.4);
+  box-shadow: 0 0 0 3px rgba(245, 194, 66, 0.08);
+}
+
+/* ---------- Submit Button ---------- */
+.submitBtn {
+  margin-top: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  background: linear-gradient(135deg, #F5C242 0%, #E8AB30 100%);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a0f05;
+  font-family: var(--font-inter), sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(245, 194, 66, 0.15);
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(245, 194, 66, 0.25);
+}
+
+.submitBtn:active {
+  transform: translateY(0);
+}
+
+/* ---------- Success Message ---------- */
+.successMsg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.successIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(245, 194, 66, 0.15);
+  border: 1px solid rgba(245, 194, 66, 0.3);
+  color: #FFD75A;
+  font-size: 1.5rem;
+}
+
+.successMsg p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  .nameRow {
+    grid-template-columns: 1fr;
+  }
+
+  .contactRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .contactDivider {
+    width: 60%;
+    height: 1px;
+  }
+}

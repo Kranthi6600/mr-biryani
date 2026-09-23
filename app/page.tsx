@@ -15,6 +15,7 @@ import StatsCounter from "./components/StatsCounter";
 import Loader from "./components/Loader";
 import CustomCursor from "./components/CustomCursor";
 import Reservation from "./components/Reservation";
+import Contact from "./components/Contact";
 import Locations from "./components/Locations";
 import GiftCards from "./components/GiftCards";
 import Footer from "./components/Footer";
@@ -168,6 +169,8 @@ export default function Home() {
       <Reservation />
 
       <GiftCards />
+
+      <Contact />
 
       <Footer />
 

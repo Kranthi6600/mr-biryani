@@ -126,11 +126,21 @@ export default function Reservation() {
             </p>
 
             <div className={styles.orderBtns}>
-              <a href="#" className={`${styles.orderBtn} ${styles.orderDelivery}`}>
+              <a
+                href="https://mrbiryanirestaurant.smartonlineorder.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.orderBtn} ${styles.orderDelivery}`}
+              >
                 <span className={styles.orderBtnLabel}>Delivery</span>
                 <span className={styles.orderBtnSub}>30-45 min</span>
               </a>
-              <a href="#" className={`${styles.orderBtn} ${styles.orderPickup}`}>
+              <a
+                href="https://mrbiryanirestaurant.smartonlineorder.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.orderBtn} ${styles.orderPickup}`}
+              >
                 <span className={styles.orderBtnLabel}>Pickup</span>
                 <span className={styles.orderBtnSub}>Ready in 20 min</span>
               </a>
@@ -139,12 +149,12 @@ export default function Reservation() {
             <div className={styles.contactRow}>
               <div className={styles.contactItem}>
                 <span className={styles.contactLabel}>Call</span>
-                <span className={styles.contactValue}>+91 98765 43210</span>
+                <a href="tel:+19052409585" className={styles.contactValue}>+1 905-240-9585</a>
               </div>
               <div className={styles.contactDivider} />
               <div className={styles.contactItem}>
                 <span className={styles.contactLabel}>Hours</span>
-                <span className={styles.contactValue}>12 PM – 11 PM Daily</span>
+                <span className={styles.contactValue}>11:30 AM – 11:00 PM</span>
               </div>
             </div>
           </div>
