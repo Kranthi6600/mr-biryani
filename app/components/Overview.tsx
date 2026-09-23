@@ -15,14 +15,16 @@ function useTypingEffect(text: string, speed = 20) {
   // state in response to a prop change — React re-renders immediately without
   // committing, avoiding the cascading renders that setState inside an effect
   // would cause. See https://react.dev/learn/you-might-not-need-an-effect
+  // Note: only state is reset here; the ref is reset inside the effect below,
+  // since refs must not be mutated during render.
   if (text !== prevText) {
     setPrevText(text);
     setDisplayed("");
     setDone(false);
-    indexRef.current = 0;
   }
 
   useEffect(() => {
+    indexRef.current = 0;
     const interval = setInterval(() => {
       if (indexRef.current < text.length) {
         setDisplayed(text.slice(0, indexRef.current + 1));
