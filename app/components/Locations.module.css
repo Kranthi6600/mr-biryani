@@ -198,6 +198,12 @@
 }
 
 /* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .section {
+    padding: clamp(4rem, 9vh, 6rem) 1.5rem;
+  }
+}
+
 @media (max-width: 640px) {
   .grid {
     grid-template-columns: 1fr;

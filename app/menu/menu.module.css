@@ -36,8 +36,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.08);
   color: #FFD75A;
@@ -81,8 +81,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.08);
   color: #FFD75A;
@@ -132,7 +132,8 @@
   border: none;
   outline: none;
   background: transparent;
-  font-size: 0.9rem;
+  /* 16px minimum stops iOS Safari from force-zooming on focus */
+  font-size: 1rem;
   color: #f5f0e8;
   font-family: var(--font-inter), sans-serif;
 }
@@ -145,8 +146,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: rgba(245, 240, 232, 0.1);
   color: rgba(245, 240, 232, 0.5);
@@ -178,6 +179,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  min-height: 38px;
   padding: 7px 14px;
   border-radius: 20px;
   background: rgba(245, 240, 232, 0.06);
@@ -201,14 +203,14 @@
 }
 
 /* ---------- Content ---------- */
+/* No overflow here on purpose: an overflow container would become the nearest
+   scrolling ancestor and stop .categoryHeader from ever sticking. */
 .content {
   flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .categorySection {
-  scroll-margin-top: 161px;
+  scroll-margin-top: calc(var(--sticky-h, 161px) + 8px);
 }
 
 .categoryHeader {
@@ -217,7 +219,7 @@
   gap: 8px;
   padding: 18px 16px 10px;
   position: sticky;
-  top: 0;
+  top: var(--sticky-h, 161px);
   z-index: 97;
   background: #0d0703;
 }
@@ -320,6 +322,7 @@
 
 /* ---------- Add Button ---------- */
 .addBtn {
+  min-height: 44px;
   padding: 8px 18px;
   border-radius: 10px;
   background: transparent;
@@ -351,8 +354,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   color: #E8AB30;
   transition: background 0.15s;
 }
@@ -372,8 +375,8 @@
 /* ---------- Search Results Dropdown ---------- */
 .searchDropdown {
   background: #0d0703;
-  max-height: calc(100vh - 161px);
-  max-height: calc(100dvh - 161px);
+  max-height: calc(100vh - var(--sticky-h, 161px));
+  max-height: calc(100dvh - var(--sticky-h, 161px));
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 12px;
@@ -411,7 +414,7 @@
 /* ---------- Cart Bar ---------- */
 .cartBar {
   position: fixed;
-  bottom: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 24px);
@@ -566,7 +569,7 @@
 }
 
 .cartSheetFooter {
-  padding: 16px 20px 24px;
+  padding: 16px 20px calc(24px + env(safe-area-inset-bottom));
   border-top: 1px solid rgba(232, 171, 48, 0.1);
 }
 
@@ -595,10 +598,11 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+  min-height: 48px;
   padding: 14px;
   border-radius: 12px;
-  background: #1a0f05;
-  color: #FFD75A;
+  background: linear-gradient(135deg, #E8AB30 0%, #D4951A 100%);
+  color: #1a0f05;
   font-size: 0.95rem;
   font-weight: 700;
   transition: opacity 0.2s;
@@ -610,5 +614,100 @@
 
 /* ---------- Bottom Spacer ---------- */
 .bottomSpacer {
-  height: 180px;
+  height: calc(180px + env(safe-area-inset-bottom));
+}
+
+/* ==================== Tablet and up ==================== */
+@media (min-width: 768px) {
+  .page {
+    max-width: 900px;
+  }
+
+  .header {
+    padding: 18px 24px;
+  }
+
+  .headerTitle {
+    font-size: 1.5rem;
+  }
+
+  .searchWrap,
+  .chipRow {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .categoryHeader {
+    padding: 24px 24px 12px;
+  }
+
+  .categoryTitle {
+    font-size: 1.2rem;
+  }
+
+  /* Two item columns once there's room for them */
+  .itemList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  .productCard {
+    margin: 0;
+  }
+
+  .cartBar {
+    max-width: 640px;
+    padding: 14px 20px;
+  }
+
+  /* Bottom sheet becomes a centered dialog */
+  .cartOverlay {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cartSheet {
+    border-radius: 20px;
+    max-height: 70vh;
+    max-height: 70dvh;
+    animation: sheetFadeIn 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+
+  @keyframes sheetFadeIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+
+/* ==================== Desktop ==================== */
+@media (min-width: 1200px) {
+  .page {
+    max-width: 1200px;
+  }
+
+  .itemList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Hover affordances only where a real pointer exists */
+@media (hover: hover) and (pointer: fine) {
+  .productCard:hover {
+    border-color: rgba(232, 171, 48, 0.25);
+  }
+
+  .addBtn:hover {
+    background: #E8AB30;
+    color: #1a0f05;
+  }
+
+  .chip:hover {
+    color: rgba(245, 240, 232, 0.9);
+  }
+
+  .chipActive:hover {
+    color: #1a0f05;
+  }
 }

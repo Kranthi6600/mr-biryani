@@ -1,6 +1,8 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
-    <footer className="relative z-20 bg-[#0d0703] px-6 py-16">
+    <footer className="relative z-20 bg-[#0d0703] px-6 py-10 lg:py-16">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col items-center gap-8">
           <h3
@@ -11,7 +13,7 @@ export default function Footer() {
           </h3>
 
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm tracking-[0.15em] uppercase text-white/40">
-            <a href="#hero" className="hover:text-[#FFD75A] transition-colors duration-300 cursor-pointer">Home</a>
+            <Link href="/" className="hover:text-[#FFD75A] transition-colors duration-300 cursor-pointer">Home</Link>
             <a href="#menu" className="hover:text-[#FFD75A] transition-colors duration-300 cursor-pointer">Menu</a>
             <a href="#about" className="hover:text-[#FFD75A] transition-colors duration-300 cursor-pointer">About</a>
             <a href="#gallery" className="hover:text-[#FFD75A] transition-colors duration-300 cursor-pointer">Gallery</a>

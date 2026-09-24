@@ -175,7 +175,7 @@ export default function Gallery() {
     <section
       ref={sectionRef}
       id="gallery"
-      className="relative z-20 px-4 sm:px-6 py-20 sm:py-32 overflow-hidden"
+      className="relative z-20 px-4 sm:px-6 py-14 lg:py-32 overflow-hidden"
       style={{
         background:
           "radial-gradient(ellipse at 30% 20%, rgba(232, 171, 48, 0.12) 0%, transparent 50%)," +

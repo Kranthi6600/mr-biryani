@@ -1,0 +1,235 @@
+/* ==================== Mobile / Tablet Hero ====================
+   Compact hero shown below 1024px only. The desktop layout is final and
+   deliberately has no hero, so this section is hidden from lg upward. */
+.hero {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  height: 92dvh;
+  min-height: 560px;
+  max-height: none;
+  overflow: hidden;
+  background: #0d0703;
+  isolation: isolate;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    display: none;
+  }
+}
+
+/* ---------- Video / poster layer ---------- */
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+  z-index: 0;
+}
+
+/* Without a decoded video the poster still shows, so motion can be dropped
+   entirely for users who ask for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .video {
+    display: none;
+  }
+
+  .hero {
+    background-image: url("/imgs/mr-biryani-tradition.jpg");
+    background-size: cover;
+    background-position: center 60%;
+  }
+}
+
+/* ---------- Scrims ---------- */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(13, 7, 3, 0.88) 0%,
+    rgba(13, 7, 3, 0.35) 30%,
+    rgba(13, 7, 3, 0.7) 66%,
+    #0d0703 100%
+  );
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 85%,
+    rgba(232, 171, 48, 0.18) 0%,
+    transparent 60%
+  );
+}
+
+/* ---------- Content ---------- */
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 22px calc(28px + env(safe-area-inset-bottom));
+}
+
+.eyebrow {
+  font-family: var(--font-cinzel-decorative), serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: #ffd75a;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.title {
+  margin-top: 8px;
+  font-family: var(--font-cinzel), serif;
+  font-size: clamp(2.6rem, 13vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1;
+  color: #ffd75a;
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.7),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.ornamentLine {
+  width: 44px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 171, 48, 0.6), transparent);
+}
+
+.ornamentDiamond {
+  width: 6px;
+  height: 6px;
+  rotate: 45deg;
+  background: rgba(232, 171, 48, 0.8);
+}
+
+.tagline {
+  margin-top: 14px;
+  max-width: 30ch;
+  font-family: var(--font-fraunces), serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(255, 244, 214, 0.82);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* ---------- CTAs ---------- */
+.ctaRow {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 22px;
+}
+
+.ctaPrimary {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e8ab30 0%, #d4951a 100%);
+  color: #1a0f05;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 10px 30px rgba(232, 171, 48, 0.32);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ctaPrimary:active {
+  transform: scale(0.97);
+  box-shadow: 0 6px 18px rgba(232, 171, 48, 0.28);
+}
+
+.ctaSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: rgba(26, 15, 5, 0.6);
+  border: 1.5px solid rgba(255, 215, 90, 0.4);
+  color: #ffd75a;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.ctaSecondary:active {
+  transform: scale(0.97);
+  border-color: rgba(255, 215, 90, 0.75);
+}
+
+/* ---------- Scroll cue ---------- */
+.scrollCue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 20px;
+  color: rgba(255, 215, 90, 0.55);
+  animation: cueBob 2s ease-in-out infinite;
+}
+
+.scrollCueLabel {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+@keyframes cueBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ---------- Tablet ---------- */
+@media (min-width: 640px) {
+  .hero {
+    height: 88dvh;
+  }
+
+  .tagline {
+    font-size: 1.05rem;
+    max-width: 38ch;
+  }
+
+  .content {
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  }
+}

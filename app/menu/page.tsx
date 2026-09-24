@@ -38,7 +38,11 @@ export default function MobileMenu() {
   const [cart, setCart] = useState<Record<string, CartItem>>({});
   const [cartOpen, setCartOpen] = useState(false);
   const chipRowRef = useRef<HTMLDivElement>(null);
+  const stickyTopRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  // Measured height of the sticky header block. The chip bar unmounts while
+  // searching, so this changes at runtime and can't be a hardcoded constant.
+  const [stickyH, setStickyH] = useState(0);
 
   const cartItems = Object.values(cart);
   const cartCount = cartItems.reduce((s, i) => s + i.qty, 0);
@@ -88,7 +92,7 @@ export default function MobileMenu() {
     setActiveCategory(cat);
     const el = sectionRefs.current[cat];
     if (el) {
-      const targetTop = el.getBoundingClientRect().top + window.scrollY - 160;
+      const targetTop = el.getBoundingClientRect().top + window.scrollY - stickyH - 8;
       const startTop = window.scrollY;
       const distance = targetTop - startTop;
       const duration = Math.max(1200, Math.min(2400, Math.abs(distance) * 1.6));
@@ -106,6 +110,17 @@ export default function MobileMenu() {
   };
 
   useEffect(() => {
+    const el = stickyTopRef.current;
+    if (!el) return;
+    const update = () => setStickyH(el.offsetHeight);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!stickyH) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -115,7 +130,7 @@ export default function MobileMenu() {
           }
         });
       },
-      { rootMargin: "-120px 0px -70% 0px", threshold: 0 }
+      { rootMargin: `-${stickyH}px 0px -70% 0px`, threshold: 0 }
     );
 
     Object.values(sectionRefs.current).forEach((el) => {
@@ -123,7 +138,7 @@ export default function MobileMenu() {
     });
 
     return () => observer.disconnect();
-  }, [search]);
+  }, [search, stickyH]);
 
   useEffect(() => {
     if (search) return;
@@ -152,9 +167,12 @@ export default function MobileMenu() {
   }, [activeCategory, search]);
 
   return (
-    <div className={styles.page}>
+    <div
+      className={styles.page}
+      style={stickyH ? ({ ["--sticky-h" as string]: `${stickyH}px` }) : undefined}
+    >
       {/* ---------- Sticky Top Block (header + search + chips) ---------- */}
-      <div className={styles.stickyTop}>
+      <div ref={stickyTopRef} className={styles.stickyTop}>
         <header className={styles.header}>
           <Link href="/" className={styles.backBtn} aria-label="Back to home">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

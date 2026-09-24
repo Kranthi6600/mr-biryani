@@ -44,8 +44,8 @@ export default function Experience() {
         scrollTrigger: {
           trigger: section,
           start: "top 75%",
-          end: "top 15%",
-          scrub: 4,
+          end: "top 35%",
+          scrub: 0.8,
         },
       });
 
@@ -164,7 +164,7 @@ export default function Experience() {
     <section
       ref={sectionRef}
       id="experience"
-      className="relative z-20 min-h-screen flex items-center justify-center px-4 py-20 sm:px-6 sm:py-32 overflow-x-hidden"
+      className="relative z-20 min-h-screen flex items-center justify-center px-4 py-14 sm:px-6 lg:py-32 overflow-x-hidden"
       style={{
         background:
           "radial-gradient(ellipse at 30% 20%, rgba(232, 171, 48, 0.12) 0%, transparent 50%)," +

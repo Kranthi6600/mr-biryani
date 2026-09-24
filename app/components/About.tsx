@@ -58,8 +58,8 @@ export default function About() {
         scrollTrigger: {
           trigger: section,
           start: "top 90%",
-          end: "top 5%",
-          scrub: 5,
+          end: "top 30%",
+          scrub: 0.8,
         },
       });
 
@@ -93,9 +93,9 @@ export default function About() {
       const contentTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top 40%",
-          end: "bottom 80%",
-          scrub: 4,
+          start: "top 60%",
+          end: "bottom 90%",
+          scrub: 0.8,
         },
       });
 

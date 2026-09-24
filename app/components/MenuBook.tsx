@@ -184,7 +184,7 @@ export default function MenuBook() {
     <section
       ref={sectionRef}
       id="menu"
-      className="relative z-20 min-h-0 md:min-h-[250vh] max-md:py-16 overflow-x-clip flex-shrink-0"
+      className="relative z-20 min-h-0 md:min-h-[250vh] max-md:py-10 overflow-x-clip flex-shrink-0"
       style={{ background: "linear-gradient(135deg, #0d0703 0%, #1a0f05 40%, #0a0502 100%)" }}
     >
       {/* Matching hero radial glows */}
@@ -195,7 +195,7 @@ export default function MenuBook() {
       </div>
 
       {/* ==================== Mobile Menu Preview ==================== */}
-      <div className="md:hidden relative z-10 px-5 mx-auto max-w-md py-16">
+      <div className="md:hidden relative z-10 px-5 mx-auto max-w-md py-10">
         <div className="text-center mb-8">
           <div className={styles.modalOrnament} />
           <h2 className={styles.modalTitle}>Mr Biryani</h2>

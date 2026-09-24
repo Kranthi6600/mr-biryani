@@ -76,10 +76,10 @@
   font-size: 0.72rem;
   letter-spacing: 0.45em;
   text-transform: uppercase;
-  color: rgba(232, 171, 48, 0.65);
+  color: #ffd75a;
   font-weight: 600;
   font-family: var(--font-inter), sans-serif;
-  text-shadow: 0 1px 2px rgba(232, 171, 48, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* ---------- Title ---------- */
@@ -96,16 +96,12 @@
 
 .letter {
   display: inline-block;
-  background: linear-gradient(135deg, #f5c242 0%, #e8ab30 30%, #f5c242 60%, #d4951a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #ffd75a;
   transform-style: preserve-3d;
-  filter:
-    drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.5))
-    drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.35))
-    drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.5))
-    drop-shadow(0 2px 8px rgba(232, 171, 48, 0.3));
+  text-shadow:
+    1px 1px 0 rgba(0, 0, 0, 0.5),
+    2px 2px 0 rgba(0, 0, 0, 0.35),
+    4px 4px 12px rgba(0, 0, 0, 0.5);
   will-change: transform, opacity;
 }
 
@@ -200,6 +196,7 @@
 
 .storyImage {
   object-fit: cover;
+  object-position: center 70%;
 }
 
 .storyHeading {
@@ -437,6 +434,12 @@
 }
 
 /* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .section {
+    padding: 90px 24px 70px;
+  }
+}
+
 @media (max-width: 768px) {
   .storyGrid {
     grid-template-columns: 1fr;
