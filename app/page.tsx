@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import MobileHero from "./components/MobileHero";
+import Hero from "./components/Hero";
+import TableBooking from "./components/TableBooking";
 import MenuBook from "./components/MenuBook";
 import About from "./components/About";
+import BehindCounter from "./components/BehindCounter";
 import Gallery from "./components/Gallery";
 import Experience from "./components/Experience";
 import CookingProcess from "./components/CookingProcess";
@@ -21,8 +23,11 @@ export default function Home() {
       <CustomCursor />
       <Loader />
 
-      {/* ==================== HERO: mobile & tablet only ==================== */}
-      <MobileHero />
+      {/* ==================== HERO ==================== */}
+      <Hero />
+
+      {/* Quick table booking — mobile only */}
+      <TableBooking />
 
       {/* ==================== 1st SECTION: Kitchen to Plate ==================== */}
       <CookingProcess />
@@ -39,6 +44,9 @@ export default function Home() {
       <Gallery />
 
       <Locations />
+
+      {/* Behind the counter — mobile only */}
+      <BehindCounter />
 
       <Reservation />
 

@@ -1,0 +1,110 @@
+/* ==================== Table booking strip (mobile only) ==================== */
+.section {
+  padding: 28px 20px 8px;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    display: none;
+  }
+}
+
+.card {
+  position: relative;
+  border-radius: 22px;
+  padding: 22px 18px 18px;
+  background:
+    radial-gradient(120% 90% at 100% 0%, rgba(232, 171, 48, 0.12) 0%, transparent 55%),
+    rgba(26, 15, 5, 0.72);
+  border: 1px solid rgba(232, 171, 48, 0.22);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.head {
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  font-family: var(--font-cinzel-decorative), serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.title {
+  margin-top: 6px;
+  font-family: var(--font-cinzel), serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.groupLabel {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 244, 214, 0.5);
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+}
+
+.chip {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(232, 171, 48, 0.25);
+  background: rgba(13, 7, 3, 0.5);
+  color: rgba(255, 244, 214, 0.8);
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.chip:active {
+  transform: scale(0.96);
+}
+
+.chipActive {
+  background: linear-gradient(135deg, rgba(232, 171, 48, 0.24), rgba(212, 149, 26, 0.16));
+  border-color: var(--gold);
+  color: #ffd75a;
+  box-shadow: 0 0 0 1px rgba(232, 171, 48, 0.2), 0 6px 18px rgba(232, 171, 48, 0.15);
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 6px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f5c242 0%, #d4951a 100%);
+  color: #1a0f05;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  box-shadow: 0 12px 30px rgba(232, 171, 48, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta:active {
+  transform: scale(0.97);
+  box-shadow: 0 6px 18px rgba(232, 171, 48, 0.25);
+}

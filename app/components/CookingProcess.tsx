@@ -120,7 +120,6 @@ export default function CookingProcess() {
     onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready]);
 
   // Track the current frame index so resize can redraw
@@ -134,7 +133,6 @@ export default function CookingProcess() {
 
     // Draw first frame
     drawFrame(0);
-    currentFrameRef.current = 0;
 
     const ctx = gsap.context(() => {
       const crumbs = crumbItemRefs.current.filter(Boolean) as HTMLElement[];
@@ -246,7 +244,6 @@ export default function CookingProcess() {
     }, sectionRef);
 
     return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready]);
 
   const progressPct = Math.round((loaded / FRAME_COUNT) * 100);

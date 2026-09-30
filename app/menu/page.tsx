@@ -96,6 +96,7 @@ export default function MobileMenu() {
       const startTop = window.scrollY;
       const distance = targetTop - startTop;
       const duration = Math.max(1200, Math.min(2400, Math.abs(distance) * 1.6));
+      // eslint-disable-next-line react-hooks/purity -- click handler, not render
       const startTime = performance.now();
 
       const animateScroll = (now: number) => {

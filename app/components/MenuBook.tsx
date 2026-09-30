@@ -279,10 +279,15 @@ export default function MenuBook() {
             <h2 className={styles.menuTitle}>Our Menu</h2>
 
             {/* Category dropdown */}
-            <div className={styles.dropdownWrap}>
+            <div
+              className={styles.dropdownWrap}
+              onKeyDown={(e) => { if (e.key === "Escape") setDropdownOpen(false); }}
+            >
               <button
                 className={styles.dropdownHeader}
                 onClick={() => setDropdownOpen(!dropdownOpen)}
+                aria-haspopup="listbox"
+                aria-expanded={dropdownOpen}
               >
                 <span className={styles.dropdownLabel}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -301,10 +306,12 @@ export default function MenuBook() {
               {dropdownOpen && (
                 <>
                   <div className={styles.dropdownBackdrop} onClick={() => setDropdownOpen(false)} />
-                  <div className={styles.dropdownPanel}>
+                  <div className={styles.dropdownPanel} role="listbox" aria-label="Menu categories">
                     {CATEGORIES.map((cat) => (
                       <button
                         key={cat}
+                        role="option"
+                        aria-selected={activeCategory === cat}
                         className={`${styles.dropdownOption} ${activeCategory === cat ? styles.dropdownOptionActive : ""}`}
                         onClick={() => {
                           setActiveCategory(cat);

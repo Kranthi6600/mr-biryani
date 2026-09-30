@@ -3,9 +3,29 @@
 import { useRef, useLayoutEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import CustomSelect from "./CustomSelect";
 import styles from "./Reservation.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const TIME_OPTIONS = [
+  { label: "12:00 PM", value: "12:00" },
+  { label: "1:00 PM", value: "13:00" },
+  { label: "2:00 PM", value: "14:00" },
+  { label: "7:00 PM", value: "19:00" },
+  { label: "8:00 PM", value: "20:00" },
+  { label: "9:00 PM", value: "21:00" },
+];
+
+const PARTY_OPTIONS = [
+  { label: "1 Person", value: "1" },
+  { label: "2 People", value: "2" },
+  { label: "3 People", value: "3" },
+  { label: "4 People", value: "4" },
+  { label: "5 People", value: "5" },
+  { label: "6 People", value: "6" },
+  { label: "7+ People", value: "7+" },
+];
 
 export default function Reservation() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -48,7 +68,7 @@ export default function Reservation() {
   };
 
   return (
-    <section ref={sectionRef} className={styles.section}>
+    <section ref={sectionRef} id="reservation" className={styles.section}>
       <div className={styles.bgGlow} />
 
       <div className={styles.container}>
@@ -86,29 +106,12 @@ export default function Reservation() {
 
                 <div className={styles.field}>
                   <label className={styles.label} htmlFor="time">Time</label>
-                  <select id="time" className={styles.select} required>
-                    <option value="">Select time</option>
-                    <option value="12:00">12:00 PM</option>
-                    <option value="13:00">1:00 PM</option>
-                    <option value="14:00">2:00 PM</option>
-                    <option value="19:00">7:00 PM</option>
-                    <option value="20:00">8:00 PM</option>
-                    <option value="21:00">9:00 PM</option>
-                  </select>
+                  <CustomSelect id="time" placeholder="Select time" options={TIME_OPTIONS} />
                 </div>
 
                 <div className={styles.field}>
                   <label className={styles.label} htmlFor="party">Party Size</label>
-                  <select id="party" className={styles.select} required>
-                    <option value="">Select size</option>
-                    <option value="1">1 Person</option>
-                    <option value="2">2 People</option>
-                    <option value="3">3 People</option>
-                    <option value="4">4 People</option>
-                    <option value="5">5 People</option>
-                    <option value="6">6 People</option>
-                    <option value="7+">7+ People</option>
-                  </select>
+                  <CustomSelect id="party" placeholder="Select size" options={PARTY_OPTIONS} />
                 </div>
 
                 <button type="submit" className={styles.submitBtn}>
